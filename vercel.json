@@ -1,0 +1,83 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/fb-token.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "gopilots_logo.png",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "favicon_logo.png",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "logo.png",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "logo.svg",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "demo.jpeg",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "cashfree.webp",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "petpooja_logo.webp",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "shopify_logo.webp",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "shopify_logo.png",
+      "use": "@vercel/static"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/fb-token",
+      "destination": "/api/fb-token.js"
+    },
+    {
+      "source": "/about",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/pricing",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/book-demo",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/privacy-policy",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/refund-cancellation",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/shipping-delivery",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/terms-conditions",
+      "destination": "/index.html"
+    }
+  ]
+}

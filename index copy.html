@@ -1,0 +1,4329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="icon" href="/favicon_logo.png" type="image/png" />
+  <title>GoPilots - WhatsApp Commerce Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    :root {
+      --navy: #05143A;
+      --blue: #1551E8;
+      --blue-s: #3B82F6;
+      --b100: #DBEAFE;
+      --b50: #EFF6FF;
+      --white: #fff;
+      --s700: #334155;
+      --s600: #475569;
+      --s400: #94A3B8;
+      --s200: #E2E8F0;
+      --s100: #F1F5F9;
+      --green: #22C55E;
+      --gd: #16A34A;
+      --r: 12px;
+      --rl: 18px;
+      --rxl: 26px;
+    }
+
+    html,
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: linear-gradient(135deg, #FFFFFF 0%, #F5FBFF 100%);
+      color: var(--navy);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      height: 72px;
+      background: linear-gradient(135deg, rgba(5, 20, 58, 0.02) 0%, rgba(21, 81, 232, 0.04) 100%);
+      backdrop-filter: blur(32px);
+      border-bottom: 1px solid rgba(21, 81, 232, .12);
+      display: flex;
+      align-items: center;
+      padding: 0 5vw;
+      gap: 4px;
+      box-shadow: 0 2px 16px rgba(5, 20, 58, .08);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      cursor: pointer;
+      margin-right: auto;
+      user-select: none;
+    }
+
+    .logo-mark {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(140deg, #1551E8, #3B48E8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(21, 81, 232, .3);
+      flex-shrink: 0;
+      transition: all .2s;
+    }
+
+    .logo-mark:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(21, 81, 232, .4);
+    }
+
+    .logo-text {
+      font-size: 1.12rem;
+      font-weight: 800;
+      letter-spacing: -.35px;
+      color: var(--navy);
+    }
+
+    .logo-text span {
+      color: var(--blue);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1px;
+    }
+
+    .nb {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: .875rem;
+      font-weight: 600;
+      color: var(--s600);
+      padding: 8px 16px;
+      border-radius: 50px;
+      border: 1px solid transparent;
+      background: rgba(255, 255, 255, 0.4);
+      cursor: pointer;
+      transition: all .2s cubic-bezier(.16, 1, .3, 1);
+      white-space: nowrap;
+      backdrop-filter: blur(8px);
+    }
+
+    .nb:hover,
+    .nb.on {
+      color: var(--blue);
+      background: rgba(255, 255, 255, 0.8);
+      border-color: rgba(21, 81, 232, .2);
+      box-shadow: 0 4px 12px rgba(21, 81, 232, .12);
+      transform: translateY(-1px);
+    }
+
+    .dd {
+      position: relative;
+    }
+
+    .dd-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: .875rem;
+      font-weight: 600;
+      color: var(--s600);
+      padding: 8px 16px;
+      border-radius: 50px;
+      border: 1px solid transparent;
+      background: rgba(255, 255, 255, 0.4);
+      cursor: pointer;
+      transition: all .2s cubic-bezier(.16, 1, .3, 1);
+      backdrop-filter: blur(8px);
+    }
+
+    .dd-btn:hover {
+      color: var(--blue);
+      background: rgba(255, 255, 255, 0.8);
+      border-color: rgba(21, 81, 232, .2);
+      box-shadow: 0 4px 12px rgba(21, 81, 232, .12);
+      transform: translateY(-1px);
+    }
+
+    .chev {
+      transition: transform .2s;
+    }
+
+    .chev.open {
+      transform: rotate(180deg);
+    }
+
+    .dd-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      min-width: 224px;
+      background: #fff;
+      border: 1px solid var(--s200);
+      border-radius: var(--rl);
+      box-shadow: 0 8px 40px rgba(5, 20, 58, .13);
+      padding: 6px;
+      animation: ddIn .14s cubic-bezier(.16, 1, .3, 1);
+    }
+
+    @keyframes ddIn {
+      from {
+        opacity: 0;
+        transform: translateY(-6px) scale(.98)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    .dd-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background .14s;
+    }
+
+    .dd-item:hover {
+      background: var(--b50);
+    }
+
+    .dd-ico {
+      width: 30px;
+      height: 30px;
+      border-radius: 7px;
+      background: var(--b50);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .dd-lbl {
+      font-size: .84rem;
+      font-weight: 600;
+      color: var(--s700);
+    }
+
+    .btn-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--green) 0%, var(--gd) 100%);
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: .84rem;
+      padding: 10px 24px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      transition: all .2s cubic-bezier(.16, 1, .3, 1);
+      text-decoration: none;
+      white-space: nowrap;
+      box-shadow: 0 4px 16px rgba(34, 197, 94, .3);
+      margin-left: 6px;
+    }
+
+    .btn-cta:hover {
+      box-shadow: 0 8px 24px rgba(34, 197, 94, .4);
+      transform: translateY(-2px);
+    }
+
+    .mob-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 8px;
+      color: var(--navy);
+    }
+
+    .mob-nav {
+      display: none;
+      position: fixed;
+      inset: 0;
+      top: 64px;
+      background: #fff;
+      z-index: 199;
+      overflow-y: auto;
+      padding: 12px 5vw 32px;
+    }
+
+    .mob-nav.open {
+      display: block;
+    }
+
+    .mob-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 0;
+      font-size: .95rem;
+      font-weight: 600;
+      color: var(--navy);
+      border-bottom: 1px solid var(--s100);
+      cursor: pointer;
+    }
+
+    .mob-sec {
+      font-size: .7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--s400);
+      padding: 18px 0 8px;
+    }
+
+    .page {
+      animation: pgIn .3s cubic-bezier(.16, 1, .3, 1);
+    }
+
+    @keyframes pgIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    .hero {
+      display: flex;
+      align-items: center;
+      padding: 96px 5vw 80px;
+      gap: 48px;
+      flex-wrap: wrap;
+      background: linear-gradient(135deg, #fff 0%, rgba(21, 81, 232, .02) 50%, rgba(34, 197, 94, .02) 100%);
+      position: relative;
+      overflow: hidden;
+      justify-content: center;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(21, 81, 232, .08) 0%, transparent 70%);
+      border-radius: 50%;
+      right: -150px;
+      top: -100px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(34, 197, 94, .05) 0%, transparent 70%);
+      border-radius: 50%;
+      left: -100px;
+      bottom: -50px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero>* {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-l {
+      flex: 1;
+      min-width: 290px;
+      max-width: 620px;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--b50) 0%, rgba(219, 234, 254, .8) 100%);
+      border: 1px solid var(--b100);
+      border-radius: 50px;
+      padding: 6px 14px 6px 7px;
+      font-size: .75rem;
+      font-weight: 700;
+      color: var(--blue);
+      margin-bottom: 26px;
+      box-shadow: 0 2px 8px rgba(21, 81, 232, .1);
+      width: fit-content;
+    }
+
+    .eyebrow-dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue) 0%, #3B82F6 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(21, 81, 232, .3);
+    }
+
+    .hero h1 {
+      font-weight: 800;
+      font-size: clamp(2.3rem, 4.5vw, 3.8rem);
+      line-height: 1.07;
+      letter-spacing: -1.5px;
+      color: var(--navy);
+      margin-bottom: 20px;
+      animation: slideInUp .6s ease-out;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--blue) 0%, #3B82F6 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-desc {
+      font-size: 1.04rem;
+      color: var(--s600);
+      line-height: 1.78;
+      margin-bottom: 36px;
+      max-width: 480px;
+      animation: slideInUp .6s ease-out .1s both;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .hero-brand {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      margin-bottom: 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, .96);
+      border: 1px solid rgba(255, 255, 255, .72);
+      width: fit-content;
+    }
+
+    .hero-brand img {
+      display: block;
+      height: 42px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .btn-p {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      background: linear-gradient(135deg, var(--blue) 0%, #1245C8 100%);
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: .94rem;
+      padding: 13px 24px;
+      border-radius: 50px;
+      border: 1px solid rgba(21, 81, 232, .3);
+      cursor: pointer;
+      transition: all .2s;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(21, 81, 232, .35);
+    }
+
+    .btn-p:hover {
+      background: linear-gradient(135deg, #1245C8 0%, #0E37B0 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(21, 81, 232, .4);
+    }
+
+    .btn-o {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--navy);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: .9rem;
+      background: rgba(255, 255, 255, .8);
+      border: 1.5px solid var(--s200);
+      padding: 12px 20px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all .2s;
+      text-decoration: none;
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-o:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+      background: var(--b50);
+      box-shadow: 0 4px 16px rgba(21, 81, 232, .2);
+    }
+
+    .trust-r {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 28px;
+      background: rgba(255, 255, 255, .5);
+      padding: 11px 15px;
+      border-radius: 50px;
+      border: 1px solid rgba(21, 81, 232, .1);
+      backdrop-filter: blur(10px);
+      width: fit-content;
+    }
+
+    .avts {
+      display: flex;
+    }
+
+    .avt {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--b100) 0%, #DBEAFE 100%);
+      border: 2.5px solid #fff;
+      margin-right: -7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .62rem;
+      font-weight: 700;
+      color: var(--blue);
+      box-shadow: 0 2px 4px rgba(21, 81, 232, .2);
+    }
+
+    .trust-t {
+      font-size: .76rem;
+      color: var(--s700);
+      font-weight: 600;
+      padding-left: 8px;
+    }
+
+    .hero-partners {
+      flex-basis: 100%;
+      padding: 36px 0 0;
+      border-top: 1px solid rgba(21, 81, 232, .1);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .hero-partners-label {
+      font-size: .72rem;
+      font-weight: 700;
+      color: var(--s400);
+      white-space: nowrap;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .hero-partner-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .hero-partner-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px 8px 10px;
+      border-radius: 50px;
+      background: rgba(255, 255, 255, .6);
+      border: 1px solid var(--s200);
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--s700);
+      backdrop-filter: blur(8px);
+      transition: all .2s;
+    }
+
+    .hero-partner-pill:hover {
+      border-color: rgba(21, 81, 232, .25);
+      background: var(--b50);
+      color: var(--blue);
+    }
+
+    .hero-partner-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      box-shadow: inset 0 0 0 1px rgba(148, 163, 184, .15);
+      flex-shrink: 0;
+    }
+
+    .hero-partner-logo svg {
+      width: 22px;
+      height: 22px;
+      display: block;
+    }
+
+    .hero-partner-logo img {
+      max-width: 28px;
+      max-height: 28px;
+      width: auto;
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    .hero-partner-pill.logo-only {
+      padding: 8px 10px;
+      gap: 0;
+    }
+
+    .hero-partner-pill.logo-only .hero-partner-logo {
+      width: 78px;
+      height: 58px;
+      border-radius: 16px;
+    }
+
+    .hero-partner-pill.logo-only .hero-partner-logo img {
+      max-width: 58px;
+      max-height: 38px;
+    }
+
+    .hero-partner-text {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      line-height: 1.15;
+    }
+
+    .hero-partner-name {
+      font-size: .8rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .hero-partner-sub {
+      font-size: .66rem;
+      color: var(--s400);
+    }
+
+    .feature-marquee-section {
+      padding: 18px 0 0;
+      overflow: hidden;
+      max-width: 100%;
+    }
+
+    .feature-marquee-shell {
+      position: relative;
+      overflow: hidden;
+      margin-top: 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(21, 81, 232, .1);
+      background: rgba(255, 255, 255, .72);
+      box-shadow: 0 10px 30px rgba(5, 20, 58, .08);
+    }
+
+    .feature-marquee-shell::before,
+    .feature-marquee-shell::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 84px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .feature-marquee-shell::before {
+      left: 0;
+      background: linear-gradient(90deg, rgba(255, 255, 255, .98), rgba(255, 255, 255, 0));
+    }
+
+    .feature-marquee-shell::after {
+      right: 0;
+      background: linear-gradient(270deg, rgba(255, 255, 255, .98), rgba(255, 255, 255, 0));
+    }
+
+    .feature-marquee-track {
+      display: flex;
+      width: max-content;
+      gap: 10px;
+      padding: 10px 0;
+      animation: marqueeScroll 24s linear infinite;
+    }
+
+    .feature-marquee-shell:hover .feature-marquee-track {
+      animation-play-state: paused;
+    }
+
+    @keyframes marqueeScroll {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    .feature-marquee-card {
+      width: auto;
+      min-height: 0;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .96);
+      color: var(--navy);
+      border: 1px solid rgba(21, 81, 232, .1);
+      box-shadow: 0 8px 24px rgba(5, 20, 58, .06);
+      display: inline-flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .feature-marquee-top {
+      display: contents;
+    }
+
+    .feature-marquee-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .25);
+    }
+
+    .feature-marquee-tag {
+      display: none;
+    }
+
+    .feature-marquee-card h3 {
+      font-size: .82rem;
+      font-weight: 800;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .feature-marquee-card p {
+      display: none;
+    }
+
+    .hero-r {
+      flex: 1;
+      min-width: 270px;
+      max-width: 440px;
+      position: relative;
+      margin: 0 auto;
+    }
+
+    .phone {
+      background: #fff;
+      border: 1.5px solid var(--s200);
+      border-radius: 36px;
+      box-shadow:
+        0 28px 80px rgba(5, 20, 58, .14),
+        0 0 1px rgba(21, 81, 232, .2);
+      overflow: hidden;
+      animation: phoneFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes phoneFloat {
+
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-12px);
+      }
+    }
+
+    .p-bar {
+      height: 26px;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .p-notch {
+      width: 72px;
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, .15);
+    }
+
+    .wa-hdr {
+      background: #075E54;
+      color: #fff;
+      padding: 11px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .wa-av {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #25D366;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .wa-nm {
+      font-weight: 700;
+      font-size: .87rem;
+    }
+
+    .wa-st {
+      font-size: .68rem;
+      opacity: .75;
+      margin-top: 1px;
+    }
+
+    .chat {
+      background: #E5DDD5;
+      padding: 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      min-height: 280px;
+    }
+
+    .msg {
+      max-width: 83%;
+      padding: 8px 11px;
+      font-size: .79rem;
+      line-height: 1.55;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+    }
+
+    .mi {
+      background: #fff;
+      border-radius: 0 11px 11px 11px;
+      align-self: flex-start;
+      color: #111;
+    }
+
+    .mo {
+      background: #DCF8C6;
+      border-radius: 11px 0 11px 11px;
+      align-self: flex-end;
+      color: #111;
+    }
+
+    .mt {
+      font-size: .6rem;
+      color: rgba(0, 0, 0, .38);
+      text-align: right;
+      margin-top: 2px;
+    }
+
+    .typing-bub {
+      display: flex;
+      gap: 3px;
+      align-items: center;
+      padding: 8px 12px;
+      background: #fff;
+      border-radius: 0 11px 11px 11px;
+      align-self: flex-start;
+      width: 46px;
+    }
+
+    .td {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--s400);
+      animation: bop 1.2s infinite;
+    }
+
+    .td:nth-child(2) {
+      animation-delay: .2s
+    }
+
+    .td:nth-child(3) {
+      animation-delay: .4s
+    }
+
+    @keyframes bop {
+
+      0%,
+      60%,
+      100% {
+        transform: translateY(0)
+      }
+
+      30% {
+        transform: translateY(-4px)
+      }
+    }
+
+    .p-inp {
+      background: #F0F2F5;
+      padding: 9px 11px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .inp-fake {
+      flex: 1;
+      background: #fff;
+      border-radius: 20px;
+      padding: 7px 13px;
+      font-size: .73rem;
+      color: var(--s400);
+    }
+
+    .send-b {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #25D366;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .fl-a {
+      position: absolute;
+      right: -22px;
+      top: 72px;
+      background: linear-gradient(135deg, #fff 0%, #FAFAF9 100%);
+      border: 1px solid var(--s200);
+      border-radius: var(--r);
+      padding: 10px 14px;
+      box-shadow:
+        0 8px 28px rgba(5, 20, 58, .12),
+        inset 0 1px 0 rgba(255, 255, 255, .8);
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      animation: fl 3s ease-in-out infinite;
+    }
+
+    .fl-b {
+      position: absolute;
+      left: -24px;
+      bottom: 88px;
+      background: linear-gradient(135deg, #fff 0%, #FAFAF9 100%);
+      border: 1px solid var(--s200);
+      border-radius: var(--r);
+      padding: 10px 14px;
+      box-shadow:
+        0 8px 28px rgba(5, 20, 58, .12),
+        inset 0 1px 0 rgba(255, 255, 255, .8);
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      animation: fl 3s ease-in-out infinite 1.5s;
+    }
+
+    @keyframes fl {
+
+      0%,
+      100% {
+        transform: translateY(0)
+      }
+
+      50% {
+        transform: translateY(-6px)
+      }
+    }
+
+    .fi {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .fl-t {
+      font-size: .81rem;
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    .fl-s {
+      font-size: .67rem;
+      color: var(--s400);
+      font-weight: 500;
+    }
+
+    .stats {
+      background: linear-gradient(135deg, var(--navy) 0%, #0D2A5E 50%, #051E3A 100%);
+      padding: 72px 5vw;
+      display: grid;
+      grid-template-columns: minmax(240px, 360px) minmax(0, 1fr);
+      gap: 28px;
+      align-items: stretch;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stats::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(circle at 20% 50%, rgba(59, 130, 246, .05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(34, 197, 94, .03) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .stats>* {
+      position: relative;
+      z-index: 1;
+    }
+
+    .stats-intro {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8px 0;
+    }
+
+    .stats-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      padding: 7px 14px;
+      margin-bottom: 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(96, 165, 250, .24);
+      background: rgba(255, 255, 255, .08);
+      color: #93C5FD;
+      font-size: .72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .stats-title {
+      font-size: clamp(2rem, 3.3vw, 3rem);
+      line-height: 1.04;
+      font-weight: 800;
+      letter-spacing: -1.2px;
+      color: #fff;
+      margin-bottom: 14px;
+    }
+
+    .stats-copy {
+      max-width: 320px;
+      font-size: .96rem;
+      line-height: 1.75;
+      color: rgba(255, 255, 255, .68);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .stat {
+      min-width: 0;
+      text-align: left;
+      padding: 24px 22px;
+      position: relative;
+      transition: all .3s ease;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, .08);
+      background: linear-gradient(180deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .04));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06);
+    }
+
+    .stat:hover {
+      transform: translateY(-4px);
+      border-color: rgba(96, 165, 250, .28);
+    }
+
+    .stat:not(:last-child)::after {
+      display: none;
+    }
+
+    .stat-kicker {
+      font-size: .72rem;
+      color: #93C5FD;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .stat-n {
+      font-size: 3rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -1px;
+      line-height: 1;
+      background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, .8) 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stat-n span {
+      color: #60A5FA;
+      -webkit-text-fill-color: #60A5FA;
+      background: none;
+    }
+
+    .stat-l {
+      font-size: .95rem;
+      color: rgba(255, 255, 255, .92);
+      margin-top: 12px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .stat-note {
+      font-size: .8rem;
+      color: rgba(255, 255, 255, .58);
+      margin-top: 10px;
+      line-height: 1.6;
+    }
+
+    .sec {
+      padding: 88px 5vw;
+      position: relative;
+    }
+
+    .sec::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 50%, rgba(21, 81, 232, .03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(34, 197, 94, .03) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .sec>* {
+      position: relative;
+      z-index: 1;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, var(--b50) 0%, rgba(219, 234, 254, .6) 100%);
+      color: var(--blue);
+      font-size: .71rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 6px 13px;
+      border-radius: 50px;
+      margin-bottom: 14px;
+      border: 1px solid rgba(21, 81, 232, .15);
+      box-shadow: 0 2px 8px rgba(21, 81, 232, .08);
+    }
+
+    .st {
+      font-weight: 800;
+      font-size: clamp(1.7rem, 3vw, 2.7rem);
+      letter-spacing: -.7px;
+      color: var(--navy);
+      margin-bottom: 12px;
+      line-height: 1.15;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 3s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: .95;
+      }
+    }
+
+    .how .st {
+      background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, .8) 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .ss {
+      font-size: .97rem;
+      color: var(--s600);
+      line-height: 1.78;
+      max-width: 520px;
+    }
+
+    .fg {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
+      gap: 18px;
+      margin-top: 52px;
+    }
+
+    .fc {
+      background: #fff;
+      border: 1px solid var(--s200);
+      border-radius: var(--rl);
+      padding: 26px 22px;
+      transition: all .25s cubic-bezier(.16, 1, .3, 1);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .fc::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(135deg, var(--b50) 0%, transparent 55%);
+      opacity: 0;
+      transition: opacity .25s;
+      z-index: 1;
+    }
+
+    .fc::after {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(21, 81, 232, .3), transparent);
+      opacity: 0;
+      transition: opacity .25s;
+    }
+
+    .fc:hover {
+      transform: translateY(-6px);
+      border-color: var(--b100);
+      box-shadow: 0 20px 60px rgba(21, 81, 232, .12);
+    }
+
+    .fc:hover::before {
+      opacity: 1;
+    }
+
+    .fc:hover::after {
+      opacity: 1;
+    }
+
+    .fci {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .fc h3 {
+      font-weight: 700;
+      font-size: .98rem;
+      color: var(--navy);
+      margin-bottom: 7px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .fc p {
+      font-size: .86rem;
+      color: var(--s600);
+      line-height: 1.7;
+      position: relative;
+      z-index: 2;
+      flex: 1;
+    }
+
+    .how {
+      background: linear-gradient(170deg, var(--navy) 0%, #0B2159 50%, #0A1B4F 100%);
+      padding: 120px 5vw;
+      position: relative;
+      overflow: hidden;
+      scroll-margin-top: 92px;
+    }
+
+    .how::before {
+      content: '';
+      position: absolute;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(59, 130, 246, .1) 0%, transparent 70%);
+      border-radius: 50%;
+      right: -200px;
+      top: -200px;
+      pointer-events: none;
+    }
+
+    .how::after {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(16, 185, 129, .05) 0%, transparent 70%);
+      border-radius: 50%;
+      left: -150px;
+      bottom: -150px;
+      pointer-events: none;
+    }
+
+    .how>* {
+      position: relative;
+      z-index: 1;
+    }
+
+    .how .st {
+      color: #fff;
+      font-size: 2.25rem;
+      font-weight: 800;
+      line-height: 1.25;
+      letter-spacing: -0.5px;
+    }
+
+    .how .tag {
+      background: rgba(255, 255, 255, .12);
+      border-color: rgba(255, 255, 255, .2);
+      color: rgba(255, 255, 255, .85);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
+    }
+
+    .hg {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 64px;
+    }
+
+    @media (max-width: 1200px) {
+      .hg {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hg {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+    }
+
+    .hs {
+      padding: 36px 28px;
+      position: relative;
+      background: rgba(255, 255, 255, .05);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, .1);
+      transition: all .3s cubic-bezier(.16, 1, .3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hs:hover {
+      background: rgba(255, 255, 255, .1);
+      border-color: rgba(59, 130, 246, .4);
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(59, 130, 246, .15);
+    }
+
+    .hs-num {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(96, 165, 250, .25) 0%, rgba(96, 165, 250, .12) 100%);
+      border: 2px solid rgba(96, 165, 250, .4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .95rem;
+      font-weight: 800;
+      color: #93C5FD;
+      margin-bottom: 20px;
+      transition: all .3s ease;
+    }
+
+    .hs:hover .hs-num {
+      background: linear-gradient(135deg, rgba(96, 165, 250, .35) 0%, rgba(96, 165, 250, .2) 100%);
+      border-color: #60A5FA;
+      box-shadow: 0 8px 20px rgba(96, 165, 250, .35);
+      transform: scale(1.08);
+    }
+
+    .hs-ico {
+      display: none;
+    }
+
+    .hs h4 {
+      font-weight: 700;
+      font-size: 1.08rem;
+      color: #fff;
+      margin-bottom: 12px;
+      letter-spacing: -0.3px;
+    }
+
+    .hs p {
+      font-size: .87rem;
+      color: rgba(255, 255, 255, .65);
+      line-height: 1.75;
+      flex: 1;
+    }
+
+    .about-pg {
+      padding: 80px 5vw;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .about-pg h1 {
+      font-weight: 800;
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      letter-spacing: -1px;
+      color: var(--navy);
+      margin-bottom: 14px;
+    }
+
+    .lead {
+      font-size: 1.06rem;
+      color: var(--s600);
+      line-height: 1.8;
+      padding-left: 18px;
+      border-left: 3px solid var(--blue);
+      margin-bottom: 44px;
+    }
+
+    .acg {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 18px;
+    }
+
+    .ac {
+      background: #fff;
+      border: 1px solid var(--s200);
+      border-radius: var(--rl);
+      padding: 26px;
+    }
+
+    .ac-ico {
+      width: 44px;
+      height: 44px;
+      border-radius: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+
+    .ac h2 {
+      font-weight: 700;
+      font-size: .98rem;
+      color: var(--navy);
+      margin-bottom: 9px;
+    }
+
+    .ac p {
+      font-size: .88rem;
+      color: var(--s600);
+      line-height: 1.75;
+    }
+
+    .demo-pg {
+      padding: 80px 5vw;
+      max-width: 660px;
+      margin: 0 auto;
+    }
+
+    .demo-hdr {
+      text-align: center;
+      margin-bottom: 44px;
+    }
+
+    .demo-hdr h1 {
+      font-weight: 800;
+      font-size: clamp(1.9rem, 4vw, 2.7rem);
+      letter-spacing: -1px;
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+
+    .demo-hdr p {
+      font-size: .97rem;
+      color: var(--s600);
+      line-height: 1.75;
+    }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--s100);
+      border-radius: var(--r);
+      padding: 15px 16px;
+    }
+
+    .step-n {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: #fff;
+      font-size: .75rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .step-b h4 {
+      font-weight: 700;
+      font-size: .88rem;
+      color: var(--navy);
+      margin-bottom: 2px;
+    }
+
+    .step-b p {
+      font-size: .81rem;
+      color: var(--s600);
+    }
+
+    .cta-card {
+      background: linear-gradient(135deg, var(--navy) 0%, #1245C8 100%);
+      border-radius: var(--rxl);
+      padding: 34px 28px;
+      text-align: center;
+    }
+
+    .cta-card h3 {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: #fff;
+      margin-bottom: 7px;
+    }
+
+    .cta-card p {
+      font-size: .85rem;
+      color: rgba(255, 255, 255, .6);
+      margin-bottom: 22px;
+    }
+
+    .btn-wa-lg {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--green);
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: .97rem;
+      padding: 14px 30px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      transition: all .2s;
+      text-decoration: none;
+      box-shadow: 0 4px 16px rgba(34, 197, 94, .4);
+    }
+
+    .btn-wa-lg:hover {
+      background: var(--gd);
+      transform: translateY(-2px);
+    }
+
+    .pol-pg {
+      padding: 60px 5vw;
+      max-width: 840px;
+      margin: 0 auto;
+    }
+
+    .pol-pg h1 {
+      font-weight: 800;
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+      letter-spacing: -.6px;
+      color: var(--navy);
+      margin-bottom: 5px;
+    }
+
+    .pol-date {
+      font-size: .78rem;
+      color: var(--s400);
+      margin-bottom: 28px;
+    }
+
+    .pol-tabs {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+      padding: 5px;
+      background: var(--s100);
+      border-radius: var(--r);
+      width: fit-content;
+    }
+
+    .pt {
+      padding: 7px 15px;
+      border-radius: 8px;
+      font-size: .8rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--s600);
+      transition: all .17s;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .pt.on {
+      background: #fff;
+      color: var(--navy);
+      box-shadow: 0 1px 4px rgba(5, 20, 58, .1);
+    }
+
+    .pol-sec {
+      margin-bottom: 28px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--s100);
+    }
+
+    .pol-sec:last-child {
+      border-bottom: none;
+    }
+
+    .pol-sec h2 {
+      font-weight: 700;
+      font-size: .97rem;
+      color: var(--blue);
+      margin-bottom: 9px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .pol-sec p {
+      font-size: .89rem;
+      color: #374151;
+      line-height: 1.85;
+    }
+
+    footer {
+      background: var(--navy);
+      padding: 60px 5vw 30px;
+    }
+
+    .foot-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 36px;
+      margin-bottom: 44px;
+    }
+
+    .fb-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .fb-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(140deg, #1551E8, #3B48E8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .fb-name {
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: #fff;
+    }
+
+    .fb-desc {
+      font-size: .84rem;
+      color: rgba(255, 255, 255, .42);
+      line-height: 1.7;
+      margin-bottom: 18px;
+      max-width: 250px;
+    }
+
+    footer h4 {
+      font-size: .74rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: rgba(255, 255, 255, .35);
+      margin-bottom: 14px;
+    }
+
+    .fl {
+      display: block;
+      font-size: .86rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, .58);
+      text-decoration: none;
+      margin-bottom: 9px;
+      cursor: pointer;
+      transition: color .15s;
+    }
+
+    .fl:hover {
+      color: #fff;
+    }
+
+    .fc-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .84rem;
+      color: rgba(255, 255, 255, .55);
+      margin-bottom: 9px;
+      text-decoration: none;
+    }
+
+    .fc-item:hover {
+      color: #fff;
+    }
+
+    .foot-bot {
+      border-top: 1px solid rgba(255, 255, 255, .08);
+      padding-top: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .foot-bot span {
+      font-size: .78rem;
+      color: rgba(255, 255, 255, .3);
+    }
+
+    @media(max-width:860px) {
+      .foot-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .pricing-hero {
+      padding: 100px 5vw;
+      text-align: center;
+      background: linear-gradient(135deg, #05143A 0%, #1245C8 100%);
+      color: #fff;
+    }
+
+    .pricing-hero h1 {
+      font-weight: 800;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+    }
+
+    .pricing-hero p {
+      font-size: 1.05rem;
+      color: rgba(255, 255, 255, .75);
+      max-width: 600px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+
+    /* Plan type selector (Ordering vs Campaign) */
+    .plan-type-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+    }
+
+    .plan-type-toggle {
+      display: inline-flex;
+      background: var(--s100);
+      border-radius: 50px;
+      padding: 5px;
+      gap: 4px;
+      border: 1px solid var(--s200);
+    }
+
+    .plan-type-opt {
+      padding: 11px 28px;
+      border-radius: 50px;
+      font-size: .875rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--s600);
+      transition: all .25s;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      letter-spacing: -.01em;
+    }
+
+    .plan-type-opt.active {
+      background: var(--blue);
+      color: #fff;
+      box-shadow: 0 2px 18px rgba(21, 81, 232, .35);
+    }
+
+    .plan-type-opt:not(.active):hover {
+      background: var(--s200);
+      color: var(--navy);
+    }
+
+    .billing-toggle-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 32px 0 0;
+    }
+
+    .billing-toggle {
+      display: inline-flex;
+      background: #eef2f7;
+      border-radius: 50px;
+      padding: 4px;
+      gap: 2px;
+      border: 1px solid var(--s200);
+    }
+
+    .billing-opt {
+      padding: 9px 26px;
+      border-radius: 50px;
+      font-size: .875rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--s600);
+      transition: all .2s;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .billing-opt.active {
+      background: var(--blue);
+      color: #fff;
+      box-shadow: 0 2px 12px rgba(21, 81, 232, .35);
+    }
+
+    .billing-save {
+      background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
+      color: white;
+      font-size: .72rem;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 50px;
+      letter-spacing: .04em;
+      transition: opacity .2s;
+    }
+
+    .billed-note {
+      font-size: .75rem;
+      color: var(--s500);
+      margin-top: 0;
+      font-weight: 500;
+      width: 100%;
+      text-align: center;
+      letter-spacing: .02em;
+    }
+
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto 80px;
+      padding: 0 5vw;
+    }
+
+    .plan-card {
+      background: #fff;
+      border: 2px solid var(--s200);
+      border-radius: var(--rl);
+      padding: 32px 28px;
+      position: relative;
+      transition: all .3s cubic-bezier(.16, 1, .3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .plan-card.featured {
+      border-color: var(--blue);
+      transform: scale(1.05);
+      box-shadow: 0 20px 60px rgba(21, 81, 232, .15);
+    }
+
+    .plan-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 48px rgba(5, 20, 58, .12);
+    }
+
+    .plan-card.featured:hover {
+      transform: scale(1.05) translateY(-8px);
+    }
+
+    .plan-badge {
+      position: absolute;
+      top: -12px;
+      left: 20px;
+      background: var(--blue);
+      color: #fff;
+      font-size: .7rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 50px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .plan-name {
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--navy);
+      margin-bottom: 8px;
+      margin-top: 12px;
+    }
+
+    .plan-desc {
+      font-size: .88rem;
+      color: var(--s600);
+      margin-bottom: 24px;
+    }
+
+    .plan-price {
+      margin-bottom: 24px;
+    }
+
+    .plan-price-amount {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1;
+    }
+
+    .plan-price-period {
+      font-size: .88rem;
+      color: var(--s400);
+      margin-top: 4px;
+    }
+
+    .plan-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--blue);
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: .9rem;
+      padding: 12px 22px;
+      border-radius: 50px;
+      border: 2px solid var(--blue);
+      cursor: pointer;
+      transition: all .2s;
+      text-decoration: none;
+      text-align: center;
+      margin-bottom: 28px;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .plan-card.featured .plan-cta {
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .plan-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(21, 81, 232, .3);
+    }
+
+    .plan-card.featured .plan-cta:hover {
+      box-shadow: 0 8px 20px rgba(34, 197, 94, .3);
+    }
+
+    .plan-features {
+      flex: 1;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: .88rem;
+      color: var(--s600);
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+
+    .feature-check {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--b50);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--blue);
+      font-size: .75rem;
+      font-weight: 800;
+    }
+
+    .plan-card.featured .feature-check {
+      background: rgba(34, 197, 94, .1);
+      color: var(--green);
+    }
+
+    .addons-section {
+      padding: 80px 5vw;
+      background: var(--s100);
+    }
+
+    .addons-section h2 {
+      font-weight: 800;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      color: var(--navy);
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .addons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .addon-card {
+      background: #fff;
+      border: 1px solid var(--s200);
+      border-radius: var(--rl);
+      padding: 28px;
+      text-align: center;
+      transition: all .25s cubic-bezier(.16, 1, .3, 1);
+    }
+
+    .addon-card:hover {
+      border-color: var(--blue);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(21, 81, 232, .1);
+    }
+
+    .addon-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: var(--b50);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      font-size: 1.5rem;
+    }
+
+    .addon-card h3 {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+
+    .addon-card p {
+      font-size: .88rem;
+      color: var(--s600);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .addon-price {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--blue);
+      margin-bottom: 0;
+    }
+
+    .comparison-section {
+      padding: 80px 5vw;
+    }
+
+    .comparison-section h2 {
+      font-weight: 800;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      color: var(--navy);
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .comparison-table {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      border-collapse: collapse;
+      background: #fff;
+      border: 1px solid var(--s200);
+      border-radius: var(--rl);
+      overflow: hidden;
+    }
+
+    .comparison-table th {
+      background: var(--navy);
+      color: #fff;
+      padding: 20px 16px;
+      text-align: left;
+      font-weight: 700;
+      font-size: .9rem;
+    }
+
+    .comparison-table td {
+      padding: 16px;
+      border-bottom: 1px solid var(--s100);
+      font-size: .88rem;
+    }
+
+    .comparison-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .comparison-table tbody tr:nth-child(even) {
+      background: var(--s50);
+    }
+
+    .comp-feature {
+      color: var(--navy);
+      font-weight: 600;
+    }
+
+    .comp-check {
+      color: var(--green);
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .pricing-faq {
+      padding: 80px 5vw;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .pricing-faq h2 {
+      font-weight: 800;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      color: var(--navy);
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .faq-item {
+      margin-bottom: 20px;
+      border: 1px solid var(--s200);
+      border-radius: var(--r);
+      overflow: hidden;
+      transition: all .2s;
+    }
+
+    .faq-item:hover {
+      border-color: var(--blue);
+      box-shadow: 0 4px 16px rgba(21, 81, 232, .08);
+    }
+
+    .faq-q {
+      padding: 18px 20px;
+      background: var(--s50);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      color: var(--navy);
+      transition: background .2s;
+      border: none;
+      width: 100%;
+      text-align: left;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: .95rem;
+    }
+
+    .faq-q:hover {
+      background: var(--b50);
+    }
+
+    .faq-toggle {
+      font-size: 1.2rem;
+      transition: transform .3s;
+    }
+
+    .faq-toggle.open {
+      transform: rotate(180deg);
+    }
+
+    .faq-a {
+      padding: 20px;
+      color: var(--s600);
+      line-height: 1.7;
+      font-size: .9rem;
+      display: none;
+    }
+
+    .faq-a.open {
+      display: block;
+    }
+
+    .campaign-section {
+      padding: 80px 5vw;
+      background: linear-gradient(135deg, rgba(21, 81, 232, .05) 0%, rgba(34, 197, 94, .05) 100%);
+    }
+
+    .campaign-section h2 {
+      font-weight: 800;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      color: var(--navy);
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .campaign-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .campaign-card {
+      background: #fff;
+      border: 2px solid var(--s200);
+      border-radius: var(--rl);
+      padding: 32px 24px;
+      text-align: center;
+      transition: all .3s cubic-bezier(.16, 1, .3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .campaign-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--blue);
+      box-shadow: 0 16px 48px rgba(21, 81, 232, .12);
+    }
+
+    .campaign-price {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .campaign-price-period {
+      font-size: .88rem;
+      color: var(--s400);
+      margin-bottom: 24px;
+    }
+
+    .campaign-messages {
+      background: var(--b50);
+      border-radius: var(--r);
+      padding: 16px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .campaign-messages-count {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--blue);
+      margin-bottom: 4px;
+    }
+
+    .campaign-messages-rate {
+      font-size: .85rem;
+      color: var(--s600);
+    }
+
+    .campaign-benefit {
+      font-size: .88rem;
+      color: var(--s600);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      flex: 1;
+    }
+
+    .campaign-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--blue);
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: .9rem;
+      padding: 12px 22px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      transition: all .2s;
+      text-decoration: none;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .campaign-cta:hover {
+      background: #1245C8;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(21, 81, 232, .3);
+    }
+
+    @media(max-width:640px) {
+
+      .nav-links,
+      .btn-cta {
+        display: none;
+      }
+
+      .mob-btn {
+        display: flex;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 56px 5vw 44px;
+      }
+
+      .hero::before,
+      .hero::after {
+        display: none;
+      }
+
+      .fl-a,
+      .fl-b {
+        display: none;
+      }
+
+      .foot-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .hs:not(:last-child)::after {
+        display: none;
+      }
+
+      .stat:not(:last-child)::after {
+        display: none;
+      }
+
+      .how::before,
+      .how::after {
+        display: none;
+      }
+
+      .sec::before {
+        display: none;
+      }
+
+      .stats::before {
+        display: none;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 52px 5vw;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-copy {
+        max-width: none;
+      }
+
+      .pricing-cards {
+        max-width: 100% !important;
+      }
+
+      .pricing-cards-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .comp-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .comparison-table {
+        min-width: 100%;
+      }
+
+      .addon-cards-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+    }
+
+    /* PRICING PAGE STYLES */
+    .pricing-hero {
+      padding: 80px 5vw;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(21, 81, 232, .03) 0%, rgba(34, 197, 94, .02) 100%);
+    }
+
+    .pricing-hero h1 {
+      font-weight: 800;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      color: var(--navy);
+      margin-bottom: 12px;
+      letter-spacing: -1px;
+    }
+
+    .pricing-hero p {
+      font-size: 1.1rem;
+      color: var(--s600);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .pricing-section {
+      padding: 80px 5vw;
+      background: linear-gradient(135deg, #F8FBFF 0%, #F0F9FF 100%);
+    }
+
+    .pricing-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .pricing-cards-wrapper {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 0 -5vw;
+      padding: 0 5vw;
+    }
+
+    .pricing-cards {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(300px, 1fr));
+      gap: 24px;
+      min-width: fit-content;
+      padding: 0;
+    }
+
+    .pricing-card {
+      background: #fff;
+      border: 2px solid var(--s200);
+      border-radius: var(--rl);
+      padding: 32px 24px;
+      display: grid;
+      grid-template-rows: minmax(228px, auto) minmax(156px, auto) auto 1fr;
+      transition: border-color .2s, box-shadow .2s;
+      position: relative;
+      overflow: hidden;
+      height: 100%;
+      align-content: start;
+    }
+
+    .pricing-card:hover {
+      border-color: var(--blue);
+      box-shadow: 0 8px 24px rgba(21, 81, 232, .08);
+    }
+
+    .pricing-card.featured {
+      border-color: var(--blue);
+      box-shadow: 0 12px 40px rgba(21, 81, 232, .12);
+    }
+
+    .pricing-card.featured:hover {
+      box-shadow: 0 16px 48px rgba(21, 81, 232, .15);
+    }
+
+    .plan-badge {
+      position: absolute;
+      top: -1px;
+      left: 0;
+      right: 0;
+      background: linear-gradient(90deg, rgba(21, 81, 232, .1) 0%, rgba(34, 197, 94, .1) 100%);
+      color: var(--blue);
+      font-size: .75rem;
+      font-weight: 700;
+      padding: 8px 16px;
+      text-align: center;
+      border-bottom: 1px solid rgba(21, 81, 232, .2);
+      margin-bottom: 16px;
+    }
+
+    .card-header {
+      margin-bottom: 20px;
+      min-height: 228px;
+      height: 300px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .plan-name {
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+
+    .plan-desc {
+      font-size: .85rem;
+      color: var(--s500);
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+
+    .plan-differentiator {
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--blue);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .plan-differentiator::before {
+      content: '✨';
+      font-size: 1rem;
+    }
+
+    .plan-details {
+      font-size: .85rem;
+      color: var(--s600);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .card-pricing {
+      margin-bottom: 22px;
+      min-height: 156px;
+      height: 176px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--s100);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .plan-price-block {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 4px;
+      line-height: 1;
+      row-gap: 8px;
+      justify-content: center;
+    }
+
+    .plan-price-currency {
+      font-size: 1.2rem;
+      color: var(--blue);
+      font-weight: 600;
+    }
+
+    .plan-price-amount {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: var(--blue);
+    }
+
+    .plan-price-period {
+      font-size: .9rem;
+      color: var(--s600);
+      font-weight: 500;
+    }
+
+    .plan-price-custom {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--blue);
+    }
+
+    .gst-asterisk {
+      cursor: pointer;
+      color: var(--blue);
+      font-weight: 700;
+      transition: all .2s;
+    }
+
+    .gst-asterisk:hover {
+      transform: scale(1.2);
+    }
+
+    .order-fee {
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      min-height: 72px;
+      justify-content: flex-start;
+    }
+
+    .order-fee-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--b50), #fff);
+      border: 1px solid rgba(21, 81, 232, .14);
+      color: var(--navy);
+      font-size: .92rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .order-fee-chip.neutral {
+      color: var(--s700);
+    }
+
+    .order-fee-text {
+      font-size: .76rem;
+      color: var(--s500);
+      line-height: 1.45;
+    }
+
+    .pricing-cta {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--blue);
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: .95rem;
+      padding: 14px 20px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      transition: all .2s;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 16px rgba(21, 81, 232, .25);
+      text-decoration: none;
+      min-height: 52px;
+    }
+
+    .pricing-cta:hover {
+      background: #1245C8;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(21, 81, 232, .35);
+    }
+
+    .plan-highlights {
+      list-style: none;
+      flex: 1;
+    }
+
+    .plan-highlights li {
+      font-size: .88rem;
+      color: var(--s600);
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(21, 81, 232, .05);
+      position: relative;
+      padding-left: 24px;
+    }
+
+    .plan-highlights li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--green);
+      font-weight: 700;
+      font-size: .95rem;
+    }
+
+    .plan-highlights li:last-child {
+      border-bottom: none;
+    }
+
+    .gst-notice {
+      background: var(--s100);
+      padding: 24px 5vw;
+      text-align: center;
+      border-top: 1px solid var(--s200);
+      border-bottom: 1px solid var(--s200);
+    }
+
+    .gst-notice-content {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .gst-notice-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .gst-note-card {
+      text-align: left;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid var(--s200);
+      box-shadow: 0 8px 24px rgba(5, 20, 58, .05);
+    }
+
+    .gst-note-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      height: 28px;
+      padding: 0 10px;
+      margin-bottom: 10px;
+      border-radius: 999px;
+      background: var(--b50);
+      color: var(--blue);
+      font-size: .76rem;
+      font-weight: 800;
+      letter-spacing: .04em;
+    }
+
+    .gst-notice-content p,
+    .gst-note-card p {
+      font-size: .9rem;
+      color: var(--s700);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .pricing-stack {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pricing-stack-group {
+      display: contents;
+    }
+
+    .pricing-divider {
+      padding: 30px 5vw 12px;
+      background: linear-gradient(180deg, rgba(21, 81, 232, .03), transparent);
+    }
+
+    .pricing-divider-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: var(--s400);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: .72rem;
+      font-weight: 800;
+    }
+
+    .pricing-divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(148, 163, 184, .18), rgba(21, 81, 232, .18), rgba(148, 163, 184, .18));
+    }
+
+    .comparison-section {
+      padding: 80px 5vw;
+      background: linear-gradient(135deg, #fff 0%, rgba(21, 81, 232, .01) 100%);
+    }
+
+    .comparison-section h2 {
+      text-align: center;
+      font-weight: 800;
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      color: var(--navy);
+      margin-bottom: 32px;
+      letter-spacing: -.5px;
+    }
+
+    .comp-toggle-btn {
+      max-width: 1200px;
+      margin: 0 auto 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--blue) 0%, #1245C8 100%);
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: .95rem;
+      padding: 13px 28px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      transition: all .3s cubic-bezier(.16, 1, .3, 1);
+      box-shadow: 0 4px 20px rgba(21, 81, 232, .25);
+    }
+
+    .comp-toggle-btn:hover {
+      background: linear-gradient(135deg, #1245C8 0%, #0E37B0 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(21, 81, 232, .35);
+    }
+
+    .comp-toggle-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .7rem;
+      transition: transform .3s;
+    }
+
+    .comp-toggle-btn.open .comp-toggle-icon {
+      transform: rotate(180deg);
+    }
+
+    .comp-wrapper {
+      overflow: hidden;
+      max-width: 1200px;
+      margin: 0 auto;
+      border-radius: var(--rl);
+      border: 1.5px solid var(--s200);
+      box-shadow: 0 2px 12px rgba(5, 20, 58, .08);
+      max-height: 0;
+      transition: max-height .4s cubic-bezier(.16, 1, .3, 1);
+    }
+
+    .comp-wrapper.open {
+      max-height: 5000px;
+    }
+
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+    }
+
+    .comparison-table thead {
+      background: linear-gradient(135deg, #05143A 0%, #0E2766 100%);
+      border-bottom: 2px solid var(--blue);
+    }
+
+    .comparison-table th {
+      padding: 18px 16px;
+      text-align: left;
+      font-weight: 700;
+      font-size: .9rem;
+      color: #fff;
+      text-transform: capitalize;
+    }
+
+    .comparison-table th:nth-child(n+2) {
+      text-align: center;
+    }
+
+    .comparison-table td {
+      padding: 16px;
+      border-bottom: 1px solid var(--s100);
+      font-size: .88rem;
+      color: var(--s600);
+    }
+
+    .comparison-table tr.comp-category {
+      background: rgba(21, 81, 232, .03);
+    }
+
+    .comparison-table tr.comp-category td {
+      background: rgba(21, 81, 232, .05);
+      font-weight: 700;
+      color: var(--blue);
+      text-transform: uppercase;
+      font-size: .75rem;
+      letter-spacing: .08em;
+      padding: 14px 16px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .cat-label {
+      font-weight: 700;
+    }
+
+    .cat-desc {
+      font-size: .65rem;
+      font-weight: 500;
+      color: rgba(21, 81, 232, .7);
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .feat-name {
+      display: block;
+      font-weight: 700;
+      color: var(--navy);
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .feat-desc {
+      display: block;
+      font-size: .8rem;
+      font-weight: 400;
+      color: var(--s500);
+      margin-top: 2px;
+    }
+
+    .plan-header {
+      font-weight: 700;
+      display: block;
+      font-size: .95rem;
+      color: #fff;
+    }
+
+    .plan-header.featured-header {
+      color: #4DB5FF;
+    }
+
+    .plan-header-price {
+      font-size: .85rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, .8);
+      margin-top: 3px;
+    }
+
+    .comparison-table td:nth-child(n+2) {
+      text-align: center;
+    }
+
+    .comparison-table .comp-yes {
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    .comparison-table .comp-no {
+      color: var(--s400);
+      font-weight: 500;
+    }
+
+    .addon-cards-section {
+      padding: 80px 5vw;
+      background: linear-gradient(135deg, rgba(34, 197, 94, .03) 0%, rgba(21, 81, 232, .02) 100%);
+    }
+
+    .addon-cards-section h2 {
+      text-align: center;
+      font-weight: 800;
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      color: var(--navy);
+      margin-bottom: 8px;
+      letter-spacing: -.5px;
+    }
+
+    .addon-intro {
+      text-align: center;
+      color: var(--s600);
+      font-size: .95rem;
+      margin-bottom: 48px;
+    }
+
+    .addon-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .addon-card-item {
+      background: #fff;
+      border: 1.5px solid var(--s200);
+      border-radius: var(--rl);
+      padding: 28px 22px;
+      text-align: center;
+      transition: all .3s cubic-bezier(.16, 1, .3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .addon-card-item:hover {
+      border-color: var(--green);
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(34, 197, 94, .12);
+    }
+
+    .addon-icon {
+      font-size: 2.2rem;
+      margin-bottom: 16px;
+    }
+
+    .addon-card-item h3 {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .addon-card-item p {
+      font-size: .85rem;
+      color: var(--s600);
+      margin-bottom: 16px;
+      flex: 1;
+      line-height: 1.6;
+    }
+
+    .addon-pricing {
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--blue);
+      padding-top: 16px;
+      border-top: 1px solid var(--s100);
+    }
+
+    /* Responsive improvements */
+    @media(max-width:1200px) {
+      .pricing-cards {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+
+      .pricing-card.featured {
+        grid-column: 1 / -1;
+        max-width: 350px;
+        margin: 0 auto;
+      }
+    }
+
+    @media(max-width:768px) {
+      .pricing-hero {
+        padding: 60px 5vw;
+      }
+
+      .pricing-hero h1 {
+        font-size: 1.8rem;
+        margin-bottom: 12px;
+      }
+
+      .pricing-section {
+        padding: 60px 0;
+      }
+
+      .pricing-cards-wrapper {
+        margin: 0;
+        padding: 0 5vw;
+        overflow: visible;
+      }
+
+      .pricing-cards {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        min-width: 0;
+        padding: 0;
+      }
+
+      .pricing-card {
+        padding: 24px 18px;
+        display: flex;
+        flex-direction: column;
+        height: auto;
+      }
+
+      .card-header {
+        min-height: 0;
+        height: auto;
+      }
+
+      .card-pricing {
+        min-height: 0;
+        height: auto;
+        display: block;
+      }
+
+      .plan-name {
+        font-size: 1.2rem;
+      }
+
+      .plan-price-amount {
+        font-size: 2.2rem;
+      }
+
+      .plan-highlights li {
+        font-size: .8rem;
+        padding: 8px 0 8px 20px;
+      }
+
+      .comparison-section {
+        padding: 60px 5vw;
+      }
+
+      .comparison-table {
+        font-size: .8rem;
+      }
+
+      .comparison-table th,
+      .comparison-table td {
+        padding: 12px 10px;
+      }
+
+      .addon-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+
+      .addon-card-item {
+        padding: 20px 16px;
+      }
+
+      .addon-card-item h3 {
+        font-size: .95rem;
+      }
+
+      .addon-card-item p {
+        font-size: .8rem;
+      }
+
+      .gst-notice-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media(max-width:640px) {
+      .pricing-cards {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        min-width: 0;
+        padding: 0;
+      }
+
+      .pricing-card {
+        padding: 20px 16px;
+        border-radius: 12px;
+      }
+
+      .plan-name {
+        font-size: 1.1rem;
+        margin-bottom: 4px;
+      }
+
+      .plan-desc {
+        font-size: .8rem;
+      }
+
+      .plan-differentiator {
+        font-size: .85rem;
+      }
+
+      .plan-details {
+        font-size: .78rem;
+        margin-bottom: 16px;
+      }
+
+      .card-pricing {
+        margin-bottom: 16px;
+        padding-bottom: 16px;
+      }
+
+      .plan-price-amount {
+        font-size: 1.8rem;
+      }
+
+      .plan-price-period {
+        font-size: .8rem;
+      }
+
+      .hero-partners {
+        padding-top: 26px;
+      }
+
+      .hero-partner-pills {
+        gap: 10px;
+      }
+
+      .hero-partner-pill {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .feature-marquee-shell::before,
+      .feature-marquee-shell::after {
+        width: 34px;
+      }
+
+      .feature-marquee-card {
+        padding: 9px 14px;
+      }
+
+      .order-fee-chip {
+        white-space: normal;
+      }
+
+      .pricing-cta {
+        padding: 12px 16px;
+        font-size: .85rem;
+        margin-bottom: 16px;
+      }
+
+      .plan-highlights {
+        margin-bottom: -10px;
+      }
+
+      .plan-highlights li {
+        font-size: .75rem;
+        padding: 6px 0 6px 18px;
+        border-bottom: 1px solid rgba(21, 81, 232, .03);
+      }
+
+      .comparison-section {
+        padding: 40px 0;
+      }
+
+      .comparison-section h2 {
+        font-size: 1.4rem;
+        margin-bottom: 24px;
+      }
+
+      .comp-wrapper {
+        margin: 0;
+        border-radius: 0;
+        border: none;
+        border-top: 1px solid var(--s200);
+        border-bottom: 1px solid var(--s200);
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .comparison-table {
+        min-width: 560px;
+      }
+
+      .comparison-table th,
+      .comparison-table td {
+        padding: 10px 8px;
+        font-size: .75rem;
+      }
+
+      .comparison-table th:nth-child(1),
+      .comparison-table td:nth-child(1) {
+        padding-left: 12px;
+        text-align: left;
+        min-width: 120px;
+      }
+
+      .addon-cards-section {
+        padding: 60px 5vw;
+      }
+
+      .addon-intro {
+        margin-bottom: 32px;
+        font-size: .9rem;
+      }
+
+      .addon-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .addon-card-item {
+        padding: 16px 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="logo" id="logo" data-go="home" style="background: white; padding: 8px 12px; border-radius: 8px;">
+      <img src="/gopilots_logo.png" alt="GoPilots" style="height: 40px; width: auto; object-fit: contain;">
+    </div>
+    <div class="nav-links">
+      <button class="nb on" id="nb-home" data-go="home">Home</button>
+      <button class="nb" id="nb-about" data-go="about">About</button>
+      <button class="nb" id="nb-pricing" data-go="pricing">Pricing</button>
+      <button class="nb" id="nb-demo" data-go="demo">Book Demo</button>
+      <div class="dd" id="dd-wrap">
+        <button class="dd-btn" id="dd-btn">
+          Policies
+          <svg class="chev" id="chev" width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <polyline points="6 9 12 15 18 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </button>
+        <div class="dd-menu" id="dd-menu" style="display:none">
+          <div class="dd-item" data-go="policies" data-pol="privacy">
+            <div class="dd-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#1551E8" stroke-width="1.8"
+                  stroke-linejoin="round" />
+              </svg></div>
+            <span class="dd-lbl">Privacy Policy</span>
+          </div>
+          <div class="dd-item" data-go="policies" data-pol="refund">
+            <div class="dd-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="#1551E8" stroke-width="1.8"
+                  stroke-linejoin="round" />
+                <line x1="8" y1="13" x2="16" y2="13" stroke="#1551E8" stroke-width="1.8" stroke-linecap="round" />
+              </svg></div>
+            <span class="dd-lbl">Refund &amp; Cancellation</span>
+          </div>
+          <div class="dd-item" data-go="policies" data-pol="terms">
+            <div class="dd-ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="3" width="18" height="18" rx="3" stroke="#1551E8" stroke-width="1.8" />
+                <line x1="7" y1="9" x2="17" y2="9" stroke="#1551E8" stroke-width="1.8" stroke-linecap="round" />
+                <line x1="7" y1="13" x2="17" y2="13" stroke="#1551E8" stroke-width="1.8" stroke-linecap="round" />
+                <line x1="7" y1="17" x2="12" y2="17" stroke="#1551E8" stroke-width="1.8" stroke-linecap="round" />
+              </svg></div>
+            <span class="dd-lbl">Terms &amp; Conditions</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a href="https://wa.me/917503834000?text=I+would+like+to+book+a+GoPilots+Demo" target="_blank" class="btn-cta"
+      id="nav-demo-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
+        <path
+          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+      </svg>
+      Book Demo
+    </a>
+    <button class="mob-btn" id="mob-btn">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <line x1="3" y1="6" x2="21" y2="6" stroke="var(--navy)" stroke-width="1.8" stroke-linecap="round" />
+        <line x1="3" y1="12" x2="21" y2="12" stroke="var(--navy)" stroke-width="1.8" stroke-linecap="round" />
+        <line x1="3" y1="18" x2="21" y2="18" stroke="var(--navy)" stroke-width="1.8" stroke-linecap="round" />
+      </svg>
+    </button>
+  </nav>
+
+  <div class="mob-nav" id="mob-nav">
+    <p class="mob-sec">Navigation</p>
+    <div class="mob-item" data-go="home"><svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+        <polygon points="3 9 12 2 21 9 21 20 15 20 15 14 9 14 9 20 3 20" stroke="#1551E8" stroke-width="1.8"
+          stroke-linejoin="round" />
+      </svg>Home</div>
+    <div class="mob-item" data-go="about"><svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="8" r="4" stroke="#1551E8" stroke-width="1.8" />
+        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#1551E8" stroke-width="1.8" stroke-linecap="round" />
+      </svg>About Us</div>
+    <div class="mob-item" data-go="pricing"><svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+        <path
+          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"
+          fill="#1551E8" />
+      </svg>Pricing</div>
+    <div class="mob-item" data-go="demo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" stroke="#1551E8" stroke-width="1.8"
+          stroke-linejoin="round" />
+      </svg>Book Demo</div>
+    <p class="mob-sec">Policies</p>
+    <div class="mob-item" data-go="policies" data-pol="privacy"><svg width="18" height="18" viewBox="0 0 24 24"
+        fill="none">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#1551E8" stroke-width="1.8"
+          stroke-linejoin="round" />
+      </svg>Privacy Policy</div>
+    <div class="mob-item" data-go="policies" data-pol="refund"><svg width="18" height="18" viewBox="0 0 24 24"
+        fill="none">
+        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="#1551E8" stroke-width="1.8"
+          stroke-linejoin="round" />
+      </svg>Refund &amp; Cancellation</div>
+    <div class="mob-item" data-go="policies" data-pol="terms"><svg width="18" height="18" viewBox="0 0 24 24"
+        fill="none">
+        <rect x="3" y="3" width="18" height="18" rx="3" stroke="#1551E8" stroke-width="1.8" />
+        <line x1="7" y1="9" x2="17" y2="9" stroke="#1551E8" stroke-width="1.8" stroke-linecap="round" />
+      </svg>Terms &amp; Conditions</div>
+    <div style="margin-top:20px">
+      <a href="https://wa.me/917503834000?text=I+would+like+to+book+a+GoPilots+Demo" target="_blank" class="btn-wa-lg"
+        style="width:100%;justify-content:center">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+          <path
+            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+        </svg>
+        Open WhatsApp
+      </a>
+    </div>
+  </div>
+
+  <div id="root"></div>
+
+  <footer>
+    <div class="foot-grid">
+      <div>
+        <div class="fb-logo" style="background: white; padding: 8px 12px; border-radius: 8px; display: inline-block;">
+          <img src="/gopilots_logo.png" alt="GoPilots" style="height: 24px; width: auto; object-fit: contain;">
+        </div>
+        <p class="fb-desc">WhatsApp-powered commerce for any business. Retained maximum revenue. Full customer ownership.</p>
+        <a href="https://wa.me/917503834000" target="_blank" class="btn-cta" style="font-size:.82rem;padding:8px 16px">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="white">
+            <path
+              d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+          </svg>
+          +91 7503834000
+        </a>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <span class="fl" data-go="home">Home</span>
+        <span class="fl" data-go="about">About Us</span>
+        <span class="fl" data-go="pricing">Pricing</span>
+        <span class="fl" data-go="demo">Book Demo</span>
+      </div>
+      <div>
+        <h4>Policies</h4>
+        <span class="fl" data-go="policies" data-pol="privacy">Privacy Policy</span>
+        <span class="fl" data-go="policies" data-pol="refund">Refund &amp; Cancellation</span>
+        <span class="fl" data-go="policies" data-pol="terms">Terms &amp; Conditions</span>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="mailto:contact@gopilots.in" class="fc-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+              stroke="rgba(255,255,255,.4)" stroke-width="1.6" />
+            <polyline points="22,6 12,13 2,6" stroke="rgba(255,255,255,.4)" stroke-width="1.6" />
+          </svg>
+          contact@gopilots.in
+        </a>
+        <a href="tel:7503834000" class="fc-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"
+              stroke="rgba(255,255,255,.4)" stroke-width="1.6" />
+          </svg>
+          7503834000
+        </a>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>&#169; 2025 GoPilots. All rights reserved.</span>
+      <span>Made with &#10084;&#65039; for business owners</span>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      "use strict";
+
+      var state = { route: "home", pol: "privacy" };
+
+      var WA_PATH = 'M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z';
+
+      function waIcon(size, color) {
+        return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="' + (color || 'currentColor') + '" style="vertical-align:middle;display:inline-block;margin:0 4px"><path d="' + WA_PATH + '"/></svg>';
+      }
+
+      function navigate(route, pol) {
+        state.route = route;
+        if (pol) state.pol = pol;
+
+        // Update URL based on route
+        var url = '/';
+        if (route === 'home') url = '/';
+        else if (route === 'about') url = '/about';
+        else if (route === 'pricing') url = '/pricing';
+        else if (route === 'demo') url = '/book-demo';
+        else if (route === 'policies') {
+          if (pol === 'privacy') url = '/privacy-policy';
+          else if (pol === 'refund') url = '/refund-cancellation';
+          else if (pol === 'shipping') url = '/shipping-delivery';
+          else if (pol === 'terms') url = '/terms-conditions';
+          else url = '/privacy-policy';
+        }
+
+        window.history.pushState({ route: route, pol: pol }, '', url);
+
+        document.querySelectorAll('.nb').forEach(function (b) { b.classList.remove('on'); });
+        var nb = document.getElementById('nb-' + route);
+        if (nb) nb.classList.add('on');
+        var ddMenu = document.getElementById('dd-menu');
+        if (ddMenu) ddMenu.style.display = 'none';
+        var chev = document.getElementById('chev');
+        if (chev) chev.classList.remove('open');
+        var mobNav = document.getElementById('mob-nav');
+        if (mobNav) mobNav.classList.remove('open');
+        renderPage();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      function parseUrlAndNavigate() {
+        var path = window.location.pathname.toLowerCase().trim();
+        // Remove trailing slash for consistent matching
+        if (path.length > 1 && path.endsWith('/')) {
+          path = path.slice(0, -1);
+        }
+        
+        var route = 'home';
+        var pol = 'privacy';
+
+        if (path === '/' || path === '' || path === '.') route = 'home';
+        else if (path === '/about') route = 'about';
+        else if (path === '/pricing') route = 'pricing';
+        else if (path === '/book-demo') route = 'demo';
+        else if (path === '/privacy-policy') { route = 'policies'; pol = 'privacy'; }
+        else if (path === '/refund-cancellation') { route = 'policies'; pol = 'refund'; }
+        else if (path === '/shipping-delivery') { route = 'policies'; pol = 'shipping'; }
+        else if (path === '/terms-conditions') { route = 'policies'; pol = 'terms'; }
+        else route = 'home'; // Default to home for unknown paths
+
+        state.route = route;
+        state.pol = pol;
+
+        document.querySelectorAll('.nb').forEach(function (b) { b.classList.remove('on'); });
+        var nb = document.getElementById('nb-' + route);
+        if (nb) nb.classList.add('on');
+        renderPage();
+        window.scrollTo({ top: 0, behavior: 'auto' });
+      }
+
+      function renderPage() {
+        var root = document.getElementById('root');
+        var html = '';
+        if (state.route === 'home') html = buildHome();
+        else if (state.route === 'about') html = buildAbout();
+        else if (state.route === 'pricing') html = buildPricing();
+        else if (state.route === 'demo') html = buildDemo();
+        else if (state.route === 'policies') html = buildPolicies();
+        root.innerHTML = '<div class="page">' + html + '</div>';
+      }
+
+      function buildHome() {
+        var features = [
+          ['#EFF6FF', '#1551E8', 'chat', 'WhatsApp Ordering', 'Customers order directly in WhatsApp — no app downloads, no friction, just a familiar conversation.'],
+          ['#F0FDF4', '#16A34A', 'nocomm', 'Retain Maximum Revenue', 'Earn and keep ~90% of every transaction. No hidden cuts. Maximum revenue guaranteed on every single order you process.'],
+          ['#FAF5FF', '#7C3AED', 'bot', 'WhatsApp Automation', 'Smart bot handles catalogues, orders, confirmations and live updates — 24/7, zero staff required.'],
+          ['#FFFBEB', '#D97706', 'chart', 'Deep Insights', 'Own your data. Track order history, peak hours and preferences — build real loyalty programs.'],
+          ['#FFF1F2', '#E11D48', 'layers', 'White-Labeled', 'Your brand front and center. Customers see your business — GoPilots runs silently behind.'],
+          ['#F0FDFA', '#0D9488', 'signal', '24-Hour Setup', 'We handle the WhatsApp Business API end-to-end. From onboarding to live orders in one day.']
+        ];
+
+        var featureIcons = {
+          'chat': '<path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="COLOR" stroke-width="1.8" stroke-linejoin="round"/>',
+          'nocomm': '<circle cx="12" cy="12" r="9" stroke="COLOR" stroke-width="1.8"/><line x1="15" y1="9" x2="9" y2="15" stroke="COLOR" stroke-width="1.8" stroke-linecap="round"/><circle cx="9.5" cy="9.5" r="1.5" fill="COLOR"/><circle cx="14.5" cy="14.5" r="1.5" fill="COLOR"/>',
+          'bot': '<rect x="3" y="8" width="18" height="12" rx="3" stroke="COLOR" stroke-width="1.8"/><circle cx="9" cy="14" r="1.5" fill="COLOR"/><circle cx="15" cy="14" r="1.5" fill="COLOR"/><path d="M12 8V5" stroke="COLOR" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="4" r="1.5" stroke="COLOR" stroke-width="1.8"/>',
+          'chart': '<polyline points="3 17 7 11 11 14 15 8 21 13" stroke="COLOR" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><line x1="3" y1="21" x2="21" y2="21" stroke="COLOR" stroke-width="1.8" stroke-linecap="round"/>',
+          'layers': '<path d="M12 2L2 7l10 5 10-5-10-5z" stroke="COLOR" stroke-width="1.8" stroke-linejoin="round"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="COLOR" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>',
+          'signal': '<circle cx="12" cy="12" r="3" stroke="COLOR" stroke-width="1.8"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14" stroke="COLOR" stroke-width="1.8" stroke-linecap="round"/>'
+        };
+
+        var fcHTML = '';
+        for (var i = 0; i < features.length; i++) {
+          var f = features[i];
+          var ico = featureIcons[f[2]].split('COLOR').join(f[1]);
+          fcHTML += '<div class="fc">';
+          fcHTML += '<div class="fci" style="background:' + f[0] + '">';
+          fcHTML += '<svg width="22" height="22" viewBox="0 0 24 24" fill="none">' + ico + '</svg>';
+          fcHTML += '</div><h3>' + f[3] + '</h3><p>' + f[4] + '</p></div>';
+        }
+
+        var steps = [
+          ['01', '#60A5FA', '<path d="M16 3h5v5M21 3l-7 7M8 21H3v-5M3 21l7-7" stroke="#60A5FA" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>', 'Onboard & Configure', 'Share your catalogue and branding. We set up your WhatsApp number and AI bot in under 24 hours.'],
+          ['02', '#34D399', '<path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="#34D399" stroke-width="1.8" stroke-linejoin="round"/>', 'Customer Messages You', 'Customer sends Hi to your number. Bot responds instantly with your full branded catalogue.'],
+          ['03', '#FBBF24', '<circle cx="9" cy="21" r="1" fill="#FBBF24"/><circle cx="20" cy="21" r="1" fill="#FBBF24"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 001.95-1.57l1.65-7.43H6" stroke="#FBBF24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>', 'Order & Pay', 'Customer picks items, confirms address, and pays — entirely within the WhatsApp conversation.']
+        ];
+
+        var hsHTML = '';
+        for (var j = 0; j < steps.length; j++) {
+          var s = steps[j];
+          hsHTML += '<div class="hs"><div class="hs-num">' + s[0] + '</div>';
+          hsHTML += '<div class="hs-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none">' + s[2] + '</svg></div>';
+          hsHTML += '<h4>' + s[3] + '</h4><p>' + s[4] + '</p></div>';
+        }
+
+        var partners = [
+          {
+            name: 'Shopify',
+            sub: 'Store sync',
+            bg: '#F0FDF4',
+            logo: '<img src="/shopify_logo.webp" alt="Shopify logo">'
+          },
+          {
+            name: 'Cashfree',
+            sub: 'Payments',
+            bg: '#FFF7ED',
+            logo: '<img src="/cashfree.webp" alt="Cashfree logo">',
+            logoOnly: true
+          },
+          {
+            name: 'PetPooja',
+            sub: 'POS sync',
+            bg: '#FFF7ED',
+            logo: '<img src="/petpooja_logo.webp" alt="PetPooja logo">',
+            logoOnly: true
+          },
+          {
+            name: 'WhatsApp Business API',
+            sub: 'Official API',
+            bg: '#ECFDF3',
+            logo: '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 11.9a8 8 0 10-14.9 4.1L4 20l4.2-1.1a8 8 0 0011.8-7z" fill="#25D366"/><path d="M9.2 7.8c-.2-.4-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.4-.2.3-.8.9-.8 2 0 1.1.8 2.2.9 2.3.1.2 1.5 2.4 3.8 3.2 1.9.8 2.3.7 2.7.6.5-.1 1.5-.6 1.7-1.2.2-.5.2-1 .2-1.1 0-.1-.2-.2-.5-.4l-1.6-.8c-.3-.1-.4-.1-.6.1l-.7.8c-.2.2-.3.2-.6.1-.3-.1-1.1-.4-2-1.3-.7-.6-1.2-1.4-1.4-1.7-.1-.3 0-.4.1-.6l.5-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.7-1.5z" fill="#fff"/><path d="M15.8 17.2A6.9 6.9 0 017.2 16l-.3-.2-2.5.7.7-2.4-.2-.4a6.9 6.9 0 1110.2 3.5z" stroke="#fff" stroke-width="1.1" stroke-linejoin="round"/></svg>'
+          }
+        ];
+
+        var partnerHTML = '';
+        for (var p = 0; p < partners.length; p++) {
+          var partner = partners[p];
+          partnerHTML += '<div class="hero-partner-pill' + (partner.logoOnly ? ' logo-only' : '') + '">';
+          partnerHTML += '<span class="hero-partner-logo" style="background:' + partner.bg + '">' + partner.logo + '</span>';
+          if (!partner.logoOnly) {
+            partnerHTML += '<span class="hero-partner-text"><span class="hero-partner-name">' + partner.name + '</span><span class="hero-partner-sub">' + partner.sub + '</span></span>';
+          }
+          partnerHTML += '</div>';
+        }
+
+        var marqueeItems = [
+          ['#EFF6FF', '<path d="M3 8h18M7 4v8M17 4v8M5 12h14a2 2 0 012 2v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4a2 2 0 012-2z" stroke="#1551E8" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>', 'Catalog management'],
+          ['#F0FDF4', '<path d="M12 3v18M4 12h16" stroke="#16A34A" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="12" r="8" stroke="#16A34A" stroke-width="1.7"/>', 'Order automation'],
+          ['#FFF7ED', '<path d="M5 7h14l-1.2 8.4a2 2 0 01-2 1.7H8.2a2 2 0 01-2-1.7L5 7z" stroke="#EA580C" stroke-width="1.7" stroke-linejoin="round"/><path d="M8 7a4 4 0 018 0" stroke="#EA580C" stroke-width="1.7" stroke-linecap="round"/>', 'Payment-ready checkout'],
+          ['#F5F3FF', '<path d="M4 18V8m5 10V4m5 14v-6m5 6V10" stroke="#7C3AED" stroke-width="1.7" stroke-linecap="round"/><circle cx="4" cy="18" r="1.5" fill="#7C3AED"/><circle cx="9" cy="8" r="1.5" fill="#7C3AED"/><circle cx="14" cy="12" r="1.5" fill="#7C3AED"/><circle cx="19" cy="10" r="1.5" fill="#7C3AED"/>', 'Analytics dashboard'],
+          ['#ECFDF3', '<path d="M6 12.5l3.2 3.2L18 7.9" stroke="#059669" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><rect x="4" y="4" width="16" height="16" rx="4" stroke="#059669" stroke-width="1.7"/>', 'Campaign marketing'],
+          ['#EFF6FF', '<path d="M7 8h10M7 12h10M7 16h6" stroke="#2563EB" stroke-width="1.7" stroke-linecap="round"/><rect x="4" y="4" width="16" height="16" rx="3" stroke="#2563EB" stroke-width="1.7"/>', 'White-labeled storefront']
+        ];
+
+        var marqueeTrackHTML = '';
+        for (var m = 0; m < marqueeItems.length * 2; m++) {
+          var item = marqueeItems[m % marqueeItems.length];
+          marqueeTrackHTML += '<article class="feature-marquee-card">';
+          marqueeTrackHTML += '<div class="feature-marquee-top"><span class="feature-marquee-icon" style="background:' + item[0] + '"><svg width="18" height="18" viewBox="0 0 24 24" fill="none">' + item[1] + '</svg></span><span class="feature-marquee-tag">Always on</span></div>';
+          marqueeTrackHTML += '<h3>' + item[2] + '</h3>';
+          marqueeTrackHTML += '</article>';
+        }
+
+        var statsHTML = '';
+        var stats = [
+          ['Revenue retention', '~90', '%', 'Maximum we can guarantee', 'Keep far more of every order by moving customers off third-party marketplaces.'],
+          ['Global behavior', '2B', '+', 'WhatsApp users globally', 'Customers are already there, which lowers friction and speeds up conversions.'],
+          ['Repeat growth', '3', 'x', 'Higher repeat order rate', 'Persistent chat history makes reorders, upsells, and retention naturally easier.']
+        ];
+        for (var k = 0; k < stats.length; k++) {
+          statsHTML += '<article class="stat"><div class="stat-kicker">' + stats[k][0] + '</div><div class="stat-n">' + stats[k][1] + '<span>' + stats[k][2] + '</span></div><div class="stat-l">' + stats[k][3] + '</div><div class="stat-note">' + stats[k][4] + '</div></article>';
+        }
+
+        return (
+          '<section class="hero">' +
+          '<div class="hero-l">' +
+          '<div class="hero-brand"><img src="/gopilots_logo.png" alt="GoPilots logo"></div>' +
+          '<div class="eyebrow"><div class="eyebrow-dot">' + waIcon(12, 'white') + '</div>Direct WhatsApp Commerce</div>' +
+          '<h1>Sell. Automate. Grow on WhatsApp ' + waIcon(48, '#25D366') + '</h1>' +
+          '<h2 style="font-size:1.2rem;font-weight:400;color:rgba(255,255,255,.7);margin-bottom:20px;margin-top:10px">Keep every rupee. Own your customers.</h2>' +
+          '<p class="hero-desc">GoPilots transforms your WhatsApp number into a fully automated storefront — direct orders, retained maximum revenue, and complete customer ownership.</p>' +
+          '<div class="hero-btns">' +
+          '<a href="https://wa.me/917503834000?text=I+would+like+to+book+a+GoPilots+Demo" target="_blank" class="btn-p">' + waIcon(18, 'white') + ' Try Free Demo</a>' +
+          '<button class="btn-o" id="how-btn">How it works <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><polyline points="12 5 19 12 12 19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
+          '</div>' +
+          '<section class="feature-marquee-section">' +
+          '<div class="tag" style="margin-bottom:0">Platform Highlights</div>' +
+          '<div class="feature-marquee-shell"><div class="feature-marquee-track">' + marqueeTrackHTML + '</div></div>' +
+          '</section>' +
+          '</div>' +
+          '<div class="hero-r">' +
+          '<div class="phone">' +
+          '<div class="p-bar"><div class="p-notch"></div></div>' +
+          '<div class="wa-hdr"><div class="wa-av">🏪</div><div><div class="wa-nm">Artisan Bakery</div><div class="wa-st">&#9679; Online &#8212; typically replies in mins</div></div></div>' +
+          '<div class="chat">' +
+          '<div class="msg mi">Hi! 👋 Welcome to <b>Artisan Bakery</b><br><br>📋 <b>Today\'s Catalogue:</b><br>🍰 Chocolate Croissant &#8212; ₹189<br>🥐 Butter Croissant &#8212; ₹159<br>🍞 Sourdough Loaf &#8212; ₹249<br><br>Simply reply with your order!<div class="mt">2:14 PM &#10003;&#10003;</div></div>' +
+          '<div class="msg mo">Hi! Please send me 2x Butter Croissants and 1x Sourdough 😊<div class="mt">2:15 PM &#10003;&#10003;</div></div>' +
+          '<div class="msg mi">✅ <b>Perfect! Your order is confirmed</b><br><br>📦 <b>Order Summary</b><br>2x Butter Croissant ₹318<br>1x Sourdough Loaf ₹249<br><b>Total: ₹567</b><br><br>🚚 Ready for pickup in 15 mins<br>📍 <b>1/2, Park Street</b><div class="mt">2:16 PM &#10003;&#10003;</div></div>' +
+          '<div class="typing-bub"><div class="td"></div><div class="td"></div><div class="td"></div></div>' +
+          '</div>' +
+          '<div class="p-inp"><div class="inp-fake">Type a message&#8230;</div><div class="send-b"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>' +
+          '</div>' +
+          '<div class="fl-a"><div class="fi" style="background:#F0FDF4"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#16A34A" stroke-width="1.8"/><line x1="15" y1="9" x2="9" y2="15" stroke="#16A34A" stroke-width="1.8" stroke-linecap="round"/><circle cx="9.5" cy="9.5" r="1.5" fill="#16A34A"/><circle cx="14.5" cy="14.5" r="1.5" fill="#16A34A"/></svg></div><div><div class="fl-t">~96% Revenue</div><div class="fl-s">Maximum guaranteed revenue</div></div></div>' +
+          '<div class="fl-b"><div class="fi" style="background:#EFF6FF"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" stroke="#1551E8" stroke-width="1.8" stroke-linejoin="round"/></svg></div><div><div class="fl-t">24-Hour Setup</div><div class="fl-s">No technical work required</div></div></div>' +
+          '</div>' +
+          '<div class="hero-partners">' +
+          '<span class="hero-partners-label">Integrates with</span>' +
+          '<div class="hero-partner-pills">' + partnerHTML + '</div>' +
+          '</div>' +
+          '</section>' +
+          '</section>' +
+          '<section class="stats">' +
+          '<div class="stats-intro">' +
+          '<div class="stats-tag">' + waIcon(12, '#93C5FD') + ' Why WhatsApp?</div>' +
+          '<h2 class="stats-title">Commerce works better where your customers already reply.</h2>' +
+          '<p class="stats-copy">WhatsApp feels personal, familiar, and fast. That is exactly why it outperforms heavy checkout flows for direct ordering, repeat purchases, and customer ownership.</p>' +
+          '</div>' +
+          '<div class="stats-grid">' + statsHTML + '</div>' +
+          '</section>' +
+          '<section class="sec" style="background:#fff">' +
+          '<div class="tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" stroke="#1551E8" stroke-width="1.9" stroke-linejoin="round"/></svg>Platform Features</div>' +
+          '<h2 class="st">Everything your business<br>needs to own its customers</h2>' +
+          '<p class="ss">Built for any business wanting full control over revenue, data, and brand.</p>' +
+          '<div class="fg">' + fcHTML + '</div>' +
+          '</section>' +
+          '<section class="how" id="how">' +
+          '<div class="tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="rgba(255,255,255,.8)" stroke-width="1.9" stroke-linecap="round"/><polyline points="22 4 12 14.01 9 11.01" stroke="rgba(255,255,255,.8)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>How It Works</div>' +
+          '<h2 class="st">From sign-up to first order<br>in 3 simple steps</h2>' +
+          '<div class="hg">' + hsHTML + '</div>' +
+          '</section>'
+        );
+      }
+
+      function buildAbout() {
+        var cards = [
+          ['#F0FDF4', '#16A34A', '<circle cx="12" cy="12" r="9" stroke="#16A34A" stroke-width="1.8"/><line x1="15" y1="9" x2="9" y2="15" stroke="#16A34A" stroke-width="1.8" stroke-linecap="round"/><circle cx="9.5" cy="9.5" r="1.5" fill="#16A34A"/><circle cx="14.5" cy="14.5" r="1.5" fill="#16A34A"/>', 'The Problem', 'Marketplace platforms charge high commissions and own your customer data. Businesses build their brand for years, then get locked into aggregator platforms. GoPilots flips this entirely.'],
+          ['#EFF6FF', '#1551E8', '<path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="#1551E8" stroke-width="1.8" stroke-linejoin="round"/>', 'Our Solution', 'GoPilots is a white-labeled WhatsApp Store for any business. It automates direct sales, provides deep insights, and empowers businesses to build their own brand with zero marketplace dependency.'],
+          ['#F0FDFA', '#0D9488', '<polyline points="3 17 7 11 11 14 15 8 21 13" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><line x1="3" y1="21" x2="21" y2="21" stroke="#0D9488" stroke-width="1.8" stroke-linecap="round"/>', 'Our Vision', 'We start with direct commerce, but our goal is bigger — a future where every business has a fully owned, automated, branded WhatsApp storefront with complete customer data ownership.']
+        ];
+        var cardsHTML = '';
+        for (var i = 0; i < cards.length; i++) {
+          var c = cards[i];
+          cardsHTML += '<div class="ac"><div class="ac-ico" style="background:' + c[0] + '"><svg width="22" height="22" viewBox="0 0 24 24" fill="none">' + c[2] + '</svg></div><h2>' + c[3] + '</h2><p>' + c[4] + '</p></div>';
+        }
+        return (
+          '<div class="about-pg">' +
+          '<div class="tag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#1551E8" stroke-width="1.9" stroke-linejoin="round"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="#1551E8" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>Our Story</div>' +
+          '<h1>Sell. Automate. Grow on WhatsApp ' + waIcon(48, '#25D366') + '</h1>' +
+          '<p class="lead">We envision a future where every business owns a fully branded, automated online store — complete control over customer experience and every rupee earned.</p>' +
+          '<div class="acg">' + cardsHTML + '</div>' +
+          '</div>'
+        );
+      }
+
+      function buildDemo() {
+        var steps = [
+          ['Live WhatsApp walkthrough', 'Experience placing an order exactly as your customer would on a live WhatsApp number.'],
+          ['Your catalogue, your brand', 'We will show you what your catalogue looks like as a real WhatsApp storefront.'],
+          ['Analytics and insights preview', 'Explore your customer data dashboard and understand what insights you will own.'],
+          ['Q&A with our team', 'Get all your questions answered by a GoPilots specialist before going live.']
+        ];
+        var stepsHTML = '';
+        for (var i = 0; i < steps.length; i++) {
+          stepsHTML += '<div class="step"><div class="step-n">' + (i + 1) + '</div><div class="step-b"><h4>' + steps[i][0] + '</h4><p>' + steps[i][1] + '</p></div></div>';
+        }
+        return (
+          '<div class="demo-pg">' +
+          '<div class="demo-hdr">' +
+          '<div class="tag" style="margin:0 auto 14px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" stroke="#1551E8" stroke-width="1.9" stroke-linejoin="round"/></svg>Book a Demo</div>' +
+          '<h1>Sell. Automate. Grow on WhatsApp ' + waIcon(48, '#25D366') + '</h1>' +
+          '<p>A live WhatsApp sales walkthrough tailored to your business — 30 minutes, completely free.</p>' +
+          '</div>' +
+          '<div class="steps">' + stepsHTML + '</div>' +
+          '<div class="cta-card">' +
+          '<h3>Ready? Start right now</h3>' +
+          '<p>No signup. No credit card. Just tap below and message us on WhatsApp.</p>' +
+          '<a href="https://wa.me/917503834000?text=I+would+like+to+book+a+GoPilots+Demo" target="_blank" class="btn-wa-lg">' + waIcon(20, 'white') + ' Open WhatsApp Demo</a>' +
+          '<p style="color:rgba(255,255,255,.38);font-size:.76rem;margin-top:14px;margin-bottom:0">Typically responds within 5 min &#183; Mon-Sat 9am-8pm IST</p>' +
+          '</div>' +
+          '</div>'
+        );
+      }
+
+      function buildPricing() {
+        var plans = [
+          {
+            name: 'Starter',
+            price: '999',
+            monthlyPrice: '1,249',
+            desc: 'For solo entrepreneurs',
+            differentiator: 'Essential WhatsApp ordering',
+            details: 'Perfect for businesses starting their digital journey. Get WhatsApp selling, basic automation, and fundamental analytics.',
+            featured: false,
+            cta: 'Get Started',
+            orderFee: '9',
+            orderFeeNote: 'on completed orders',
+            highlights: [
+              'WhatsApp ordering',
+              'Catalogue & product features',
+              'Automated order flows',
+              'Basic dashboard',
+              'Customer management',
+              'Unlimited WhatsApp messages***'
+            ]
+          },
+          {
+            name: 'Growth',
+            price: '2,999',
+            monthlyPrice: '3,749',
+            desc: 'For expanding businesses',
+            differentiator: 'Smart automation & marketing',
+            details: 'Scale your operations with automated order flows, powerful marketing tools, and Shopify sync for inventory management.',
+            featured: true,
+            cta: 'Get Started',
+            orderFee: '7',
+            orderFeeNote: 'on completed orders',
+            highlights: [
+              'Everything in Starter',
+              'Shopify / PetPooja integration',
+              'Automated order flows',
+              'Campaign builder',
+              'Abandoned cart recovery',
+              'Advanced analytics',
+              'Customer tagging',
+              'Unlimited WhatsApp messages***',
+              'Priority support'
+            ]
+          },
+          {
+            name: 'Pro',
+            price: '7,999',
+            monthlyPrice: '9,999',
+            desc: 'For established businesses',
+            differentiator: 'Advanced control & insights',
+            details: 'Full-featured platform with multi-agent support, loyalty campaigns, and comprehensive API access.',
+            featured: false,
+            cta: 'Get Started',
+            orderFee: '5',
+            orderFeeNote: 'on completed orders',
+            highlights: [
+              'Everything in Growth',
+              'Multi-agent support',
+              'Advanced automation',
+              'Loyalty campaigns',
+              'Full API access',
+              'Unlimited WhatsApp messages***',
+              'Dedicated support'
+            ]
+          },
+          {
+            name: 'Enterprise',
+            price: 'Custom',
+            desc: 'For large-scale operations',
+            differentiator: 'White-glove service',
+            details: 'Bespoke solutions tailored to your business. Dedicated manager, custom integrations, SLA guarantees, and unlimited everything.',
+            featured: false,
+            cta: 'Get Started',
+            orderFee: 'Custom',
+            orderFeeNote: 'tailored to your business volume',
+            highlights: [
+              'Everything in Pro',
+              'Dedicated account manager',
+              'Custom integrations',
+              'SLA support guarantee',
+              'White-label options',
+              'Custom analytics',
+              'Unlimited WhatsApp messages'
+            ]
+          }
+        ];
+
+        var plansHTML = '';
+        for (var p = 0; p < plans.length; p++) {
+          var plan = plans[p];
+          var badgeHTML = plan.featured ? '<div class="plan-badge">💎 Most Popular</div>' : '';
+          var featuredClass = plan.featured ? ' featured' : '';
+          var priceHTML = plan.price === 'Custom' ?
+            '<div class="plan-price-custom">Custom Pricing</div>' :
+            '<div class="plan-price-block"><span class="plan-price-currency">₹</span><span class="plan-price-amount" data-yearly="' + plan.price + '" data-monthly="' + plan.monthlyPrice + '">' + plan.price + '</span><span class="plan-price-period">/month</span><div class="billed-note">Billed annually</div></div>';
+
+          var feeHTML = plan.orderFee === 'Custom'
+            ? '<div class="order-fee"><span class="order-fee-chip neutral">Custom per-order fee</span><span class="order-fee-text">Unlimited WhatsApp messages</span><span class="order-fee-text">' + plan.orderFeeNote + '</span></div>'
+            : '<div class="order-fee"><span class="order-fee-chip">+ ₹' + plan.orderFee + ' / order*</span><span class="order-fee-text">Unlimited WhatsApp messages***</span></div>';
+
+          var featuresHTML = '';
+          for (var f = 0; f < plan.highlights.length; f++) {
+            featuresHTML += '<li>' + plan.highlights[f] + '</li>';
+          }
+
+          plansHTML += '<div class="pricing-card' + featuredClass + '">' +
+            badgeHTML +
+            '<div class="card-header">' +
+            '<div class="plan-name">' + plan.name + '</div>' +
+            '<p class="plan-desc">' + plan.desc + '</p>' +
+            '<p class="plan-differentiator">' + plan.differentiator + '</p>' +
+            '<p class="plan-details">' + plan.details + '</p>' +
+            '</div>' +
+            '<div class="card-pricing">' +
+            priceHTML +
+            feeHTML +
+            '</div>' +
+            '<a href="https://wa.me/917503834000?text=I+want+to+know+more+about+the+' + encodeURIComponent(plan.name) + '+plan" target="_blank" class="pricing-cta">' + waIcon(16, 'white') + ' ' + plan.cta + '</a>' +
+            '<ul class="plan-highlights">' + featuresHTML + '</ul>' +
+            '</div>';
+        }
+
+        var addons = [
+          { name: 'Campaign Messages', price: 'From ₹999/mo', desc: 'Unlimited messaging plans with per-message pricing starting at ₹1.31 including Meta charges', icon: '📨' },
+          { name: 'Logistic Integration', price: 'Custom', desc: 'Integrate with delivery partners for automated fulfillment', icon: '🚗' },
+          { name: 'Payment Gateway', price: 'varies', desc: 'Direct integration with Razorpay, PayPal, Paytm and more', icon: '💳' },
+          { name: 'Custom Reports', price: 'From ₹5,000', desc: 'Build custom analytics and reporting for your business', icon: '📊' },
+          { name: 'Shopify Sync', price: 'From ₹999/mo', desc: 'Sync inventory, orders and customers with Shopify', icon: '🔗' },
+          { name: 'API Access', price: 'From ₹2,999/mo', desc: 'Full REST API access for custom integrations', icon: '⚙️' }
+        ];
+
+        var addonsHTML = '';
+        for (var a = 0; a < addons.length; a++) {
+          var addon = addons[a];
+          addonsHTML += '<div class="addon-card">' +
+            '<div class="addon-icon">' + addon.icon + '</div>' +
+            '<h3>' + addon.name + '</h3>' +
+            '<p>' + addon.desc + '</p>' +
+            '<p class="addon-price">' + addon.price + '</p>' +
+            '</div>';
+        }
+
+        var campaigns = [
+          { price: '₹999', messages: 'Unlimited', cost: '₹1.31/msg', benefit: '₹0.86 Meta charges + ₹0.45 platform fee' },
+          { price: '₹1,499', messages: 'Unlimited', cost: '₹1.16/msg', benefit: '₹0.86 Meta charges + ₹0.30 platform fee' },
+          { price: '₹4,999', messages: 'Unlimited', cost: '₹1.16/msg', benefit: '₹0.86 Meta charges + ₹0.30 platform fee' }
+        ];
+
+        var campaignsHTML = '';
+        for (var c = 0; c < campaigns.length; c++) {
+          var campaign = campaigns[c];
+          campaignsHTML += '<div class="campaign-card">' +
+            '<div class="campaign-price">' + campaign.price + '</div>' +
+            '<div class="campaign-price-period">/month</div>' +
+            '<div class="campaign-messages">' +
+            '<div class="campaign-messages-count">' + campaign.messages + ' Messages</div>' +
+            '<div class="campaign-messages-rate">' + campaign.cost + '</div>' +
+            '</div>' +
+            '<p class="campaign-benefit">' + campaign.benefit + '</p>' +
+            '<button class="campaign-cta">Get Started 🚀</button>' +
+            '</div>';
+        }
+
+        var faqItems = [
+          ['Can I change my plan later?', 'Yes! You can upgrade or downgrade your plan at any time. Changes take effect on your next billing cycle.'],
+          ['Is there a free trial?', 'Yes, we offer a 30-day free trial for Starter and Growth plans. No credit card required.'],
+          ['What payment methods do you accept?', 'We accept all major credit/debit cards, netbanking, UPI, and digital wallets. Invoicing available for annual plans.'],
+          ['Is there a setup fee?', 'No setup fees! We handle WhatsApp Business API setup at no additional cost. You\'re live in 24 hours.'],
+          ['What happens if I exceed usage limits?', 'Plans include fair usage. We\'ll notify you before overage charges apply. Enterprise plans have unlimited usage.'],
+          ['Do you offer annual discounts?', 'Yes! Pay annually and save up to 25% on any plan. Contact our team for Enterprise custom pricing.']
+        ];
+
+        var faqHTML = '';
+        for (var q = 0; q < faqItems.length; q++) {
+          faqHTML += '<div class="faq-item">' +
+            '<button class="faq-q">' +
+            faqItems[q][0] +
+            '<span class="faq-toggle">▼</span>' +
+            '</button>' +
+            '<div class="faq-a">' + faqItems[q][1] + '</div>' +
+            '</div>';
+        }
+
+        return (
+          '<section class="pricing-hero">' +
+          '<p style="font-size:.78rem;color:rgba(255,255,255,.65);font-weight:700;margin-bottom:12px;letter-spacing:.06em;text-transform:uppercase">Flexible Pricing</p>' +
+          '<h1 style="text-align:center">Sell. Automate. Grow on WhatsApp ' + waIcon(48, '#25D366') + '</h1>' +
+          '<div class="plan-type-wrap">' +
+          '<p style="font-size:.8rem;font-weight:600;color:var(--s400);margin-bottom:10px;letter-spacing:.04em;text-transform:uppercase;text-align:center">What are you looking for?</p>' +
+          '<div class="plan-type-toggle">' +
+          '<button class="plan-type-opt active" id="plan-type-ordering" onclick="window.setPlanType(\'ordering\')">📦 WhatsApp Ordering</button>' +
+          '<button class="plan-type-opt" id="plan-type-campaign" onclick="window.setPlanType(\'campaign\')">📣 Campaign Messaging</button>' +
+          '</div>' +
+          '</div>' +
+          '<div class="pricing-stack" id="pricing-stack">' +
+          '<div class="pricing-stack-group" id="ordering-stack">' +
+          '<div id="ordering-hero-controls">' +
+          '<div class="billing-toggle-wrap">' +
+          '<div class="billing-toggle">' +
+          '<button class="billing-opt" id="opt-monthly" onclick="window.setBilling(&#39;monthly&#39;)">Monthly</button>' +
+          '<div style="position:relative;display:inline-flex">' +
+          '<button class="billing-opt active" id="opt-yearly" onclick="window.setBilling(&#39;yearly&#39;)">Yearly</button>' +
+          '<span class="billing-save" id="billing-save-badge" style="position:absolute;top:-10px;right:-10px;transform:rotate(6deg);font-size:.65rem;padding:3px 8px;white-space:nowrap">Save 25%</span>' +
+          '</div>' +
+          '</div>' +
+          '</div>' +
+          '</div>' +
+          '<section class="pricing-section" id="ordering-plans-section">' +
+          '<div class="pricing-container">' +
+          '<div class="pricing-cards-wrapper">' +
+          '<div class="pricing-cards">' + plansHTML + '</div>' +
+          '</div>' +
+          '</div>' +
+          '</section>' +
+          '<section class="gst-notice" id="ordering-gst-section">' +
+          '<div class="gst-notice-content">' +
+          '<div class="gst-notice-grid">' +
+          '<div class="gst-note-card"><span class="gst-note-label">*</span><p>Per-order fees apply only to completed orders.</p></div>' +
+          '<div class="gst-note-card"><span class="gst-note-label">**</span><p>Campaign marketing is optional and billed separately only if you use it.</p></div>' +
+          '<div class="gst-note-card"><span class="gst-note-label">***</span><p>Per-message pricing includes ₹0.86 Meta charges. Starter adds ₹0.45 GoPilots fee per message. Growth and Pro add ₹0.30.</p></div>' +
+          '<div class="gst-note-card"><span class="gst-note-label">GST</span><p>+18% GST is extra. Pay annually to save 25% on your subscription.</p></div>' +
+          '</div>' +
+          '</div>' +
+          '</section>' +
+          '<section class="comparison-section" id="ordering-comparison-section">' +
+          '<h2>Compare all features</h2>' +
+          '<button class="comp-toggle-btn" id="comp-toggle"><span class="comp-toggle-icon">▼</span>View Full Comparison</button>' +
+          '<div class="comp-wrapper" id="comp-wrapper">' +
+          '<table class="comparison-table">' +
+          '<thead><tr><th style="width:28%">Feature</th><th><span class="plan-header">Starter</span><div class="plan-header-price">₹999</div></th><th><span class="plan-header featured-header">Growth</span><div class="plan-header-price">₹2,999</div></th><th><span class="plan-header">Pro</span><div class="plan-header-price">₹7,999</div></th><th><span class="plan-header">Enterprise</span><div class="plan-header-price">Custom</div></th></tr></thead>' +
+          '<tbody>' +
+          '<tr class="comp-category"><td colspan="5"><span class="cat-label">Platform Essentials</span><span class="cat-desc">Core features to get started</span></td></tr>' +
+          '<tr><td><span class="feat-name">WhatsApp Ordering</span><span class="feat-desc">Receive and manage orders directly on WhatsApp</span></td><td class="comp-yes">✓</td><td class="comp-yes">✓</td><td class="comp-yes">✓</td><td class="comp-yes">✓</td></tr>' +
+          '<tr><td><span class="feat-name">Product Catalogue</span><span class="feat-desc">Build catalog with images, descriptions, and pricing</span></td><td class="comp-yes">✓</td><td class="comp-yes">✓</td><td class="comp-yes">✓</td><td class="comp-yes">✓</td></tr>' +
+          '<tr><td><span class="feat-name">Basic Dashboard</span><span class="feat-desc">View orders, customers, and basic metrics</span></td><td class="comp-yes">✓</td><td class="comp-yes">✓</td><td class="comp-yes">✓</td><td class="comp-yes">✓</td></tr>' +
+          '<tr class="comp-category"><td colspan="5"><span class="cat-label">Order Processing</span><span class="cat-desc">Automation and workflow capabilities</span></td></tr>' +
+          '<tr><td><span class="feat-name">Automated Order Flows</span><span class="feat-desc">Auto-respond, confirm, and process orders</span></td><td class="comp-yes">✓</td><td class="comp-yes">✓</td><td class="comp-yes">✓</td><td class="comp-yes">✓</td></tr>' +
+          '<tr><td><span class="feat-name">Custom</span><span class="feat-desc">Create personalized order and messaging workflows</span></td><td class="comp-no">—</td><td class="comp-no">—</td><td class="comp-no">—</td><td class="comp-yes">✓</td></tr>' +
+          '<tr class="comp-category"><td colspan="5"><span class="cat-label">Analytics & Insights</span><span class="cat-desc">Data and reporting tools</span></td></tr>' +
+          '<tr><td><span class="feat-name">Basic Analytics</span><span class="feat-desc">View order count, revenue, and customer count</span></td><td class="comp-yes">✓</td><td class="comp-yes">✓</td><td class="comp-yes">✓</td><td class="comp-yes">✓</td></tr>' +
+          '<tr><td><span class="feat-name">Advanced Analytics</span><span class="feat-desc">Detailed metrics, trends, and performance insights</span></td><td class="comp-no">—</td><td class="comp-yes">✓</td><td class="comp-yes">✓</td><td class="comp-yes">✓</td></tr>' +
+          '<tr><td><span class="feat-name">Custom Reports</span><span class="feat-desc">Build and export tailored reports and analysis</span></td><td class="comp-no">—</td><td class="comp-no">—</td><td class="comp-no">—</td><td class="comp-yes">✓</td></tr>' +
+          '<tr class="comp-category"><td colspan="5"><span class="cat-label">Integration & APIs</span><span class="cat-desc">Connect with your existing tools</span></td></tr>' +
+          '<tr><td><span class="feat-name">Shopify Sync</span><span class="feat-desc">Sync inventory and orders with Shopify</span></td><td class="comp-no">—</td><td class="comp-yes">✓</td><td class="comp-yes">✓</td><td class="comp-yes">✓</td></tr>' +
+          '<tr><td><span class="feat-name">PetPooja Integration</span><span class="feat-desc">Connect restaurant management systems</span></td><td class="comp-no">—</td><td class="comp-yes">✓</td><td class="comp-yes">✓</td><td class="comp-yes">✓</td></tr>' +
+          '<tr><td><span class="feat-name">API Access</span><span class="feat-desc">Build custom integrations and automations</span></td><td class="comp-no">—</td><td class="comp-no">—</td><td class="comp-yes">Full</td><td class="comp-yes">Unlimited</td></tr>' +
+          '<tr class="comp-category"><td colspan="5"><span class="cat-label">Marketing & Campaigns</span><span class="cat-desc">Reach and engage your customers</span></td></tr>' +
+          '<tr><td><span class="feat-name">WhatsApp Marketing</span><span class="feat-desc">Send bulk campaigns (included message limit varies)</span></td><td class="comp-yes">Basic</td><td class="comp-yes">✓</td><td class="comp-yes">✓</td><td class="comp-yes">✓</td></tr>' +
+          '<tr><td><span class="feat-name">Campaign Builder</span><span class="feat-desc">Drag-and-drop templates for WhatsApp campaigns</span></td><td class="comp-no">—</td><td class="comp-yes">✓</td><td class="comp-yes">✓</td><td class="comp-yes">✓</td></tr>' +
+          '<tr><td><span class="feat-name">Abandoned Cart Recovery</span><span class="feat-desc">Auto-remind customers to complete their order</span></td><td class="comp-no">—</td><td class="comp-yes">✓</td><td class="comp-yes">✓</td><td class="comp-yes">✓</td></tr>' +
+          '<tr><td><span class="feat-name">Loyalty Campaigns</span><span class="feat-desc">Create rewards programs and customer retention</span></td><td class="comp-no">—</td><td class="comp-no">—</td><td class="comp-yes">✓</td><td class="comp-yes">✓</td></tr>' +
+          '<tr class="comp-category"><td colspan="5"><span class="cat-label">Support & Management</span><span class="cat-desc">Grow your team and business support</span></td></tr>' +
+          '<tr><td><span class="feat-name">Email Support</span><span class="feat-desc">Support team available via email</span></td><td class="comp-yes">✓</td><td class="comp-yes">✓</td><td class="comp-yes">✓</td><td class="comp-yes">✓</td></tr>' +
+          '<tr><td><span class="feat-name">Priority Support</span><span class="feat-desc">Faster response times and higher priority</span></td><td class="comp-no">—</td><td class="comp-yes">✓</td><td class="comp-yes">24/5</td><td class="comp-yes">24/5</td></tr>' +
+          '<tr><td><span class="feat-name">Dedicated Account Manager</span><span class="feat-desc">Personal manager for your account</span></td><td class="comp-no">—</td><td class="comp-no">—</td><td class="comp-no">—</td><td class="comp-yes">✓</td></tr>' +
+          '<tr><td><span class="feat-name">SLA Guarantee</span><span class="feat-desc">Guaranteed uptime and response times</span></td><td class="comp-no">—</td><td class="comp-no">—</td><td class="comp-no">—</td><td class="comp-yes">✓</td></tr>' +
+          '<tr><td><span class="feat-name">Multi-Agent Support</span><span class="feat-desc">Add team members to manage business</span></td><td class="comp-no">—</td><td class="comp-no">—</td><td class="comp-yes">✓</td><td class="comp-yes">✓</td></tr>' +
+          '</tbody>' +
+          '</table>' +
+          '</div>' +
+          '</section>' +
+          '</div>' +
+          '<section class="pricing-divider" id="pricing-divider"><div class="pricing-divider-inner"><span class="pricing-divider-line"></span><span>Choose your GoPilots subscription</span><span class="pricing-divider-line"></span></div></section>' +
+          '<div class="pricing-stack-group" id="campaign-stack">' +
+          '<section style="padding:24px 5vw 72px;background:#f8f9fb" id="campaign-plans-section">' +
+          '<div style="max-width:1100px;margin:0 auto">' +
+          '<div style="text-align:center;margin-bottom:40px">' +
+          '<div style="font-size:.76rem;font-weight:800;color:var(--blue);text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px">WhatsApp Marketing</div>' +
+          '<h2 style="font-weight:800;font-size:2rem;color:var(--navy);margin-bottom:12px;letter-spacing:-.5px">Unlimited campaign messaging. Predictable pricing.</h2>' +
+          '<p style="font-size:1rem;color:var(--s600);max-width:620px;margin:0 auto;line-height:1.7">No message cap, no store subscription required. Pick the monthly plan that matches your sending volume and launch campaigns directly on WhatsApp.</p>' +
+          '</div>' +
+          '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px">' +
+          '<div style="background:#fff;border:1.5px solid var(--s200);border-radius:var(--rl);padding:36px 28px;position:relative;transition:all .3s;display:flex;flex-direction:column">' +
+          '<div style="font-size:.72rem;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px">Starter reach</div>' +
+          '<div style="font-size:2.6rem;font-weight:800;color:var(--navy);line-height:1;margin-bottom:4px">₹999<span style="font-size:1rem;font-weight:600;color:var(--s600)">/month</span></div>' +
+          '<div style="font-size:.98rem;color:var(--blue);font-weight:800;margin-bottom:6px">₹1.31 per message*</div>' +
+          '<div style="font-size:.84rem;color:var(--s600);line-height:1.6;margin-bottom:22px">(₹0.86 Meta charges + ₹0.45 GoPilots platform fee)</div>' +
+          '<a href="https://wa.me/917503834000?text=I+want+to+start+WhatsApp+Marketing+on+the+999+plan" target="_blank" style="display:block;text-align:center;background:var(--navy);color:#fff;text-decoration:none;padding:11px 20px;border-radius:50px;font-size:.875rem;font-weight:700;margin-bottom:24px">Get Started</a>' +
+          '<p style="font-size:.82rem;font-weight:700;color:var(--s700);margin-bottom:10px">Includes:</p>' +
+          '<ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:8px;font-size:.84rem;color:var(--s600);flex:1">' +
+          '<li>✓ Template campaign sending</li>' +
+          '<li>✓ Rich media support</li>' +
+          '<li>✓ Basic delivery reporting</li>' +
+          '</ul>' +
+          '</div>' +
+          '<div style="background:#fff;border:2px solid var(--blue);border-radius:var(--rl);padding:36px 28px;position:relative;box-shadow:0 16px 48px rgba(21,81,232,.13);transition:all .3s;display:flex;flex-direction:column">' +
+          '<div style="position:absolute;top:-13px;left:24px;background:var(--blue);color:#fff;font-size:.7rem;font-weight:700;padding:5px 14px;border-radius:50px;text-transform:uppercase;letter-spacing:.06em">Best Value</div>' +
+          '<div style="font-size:.72rem;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px">Growth send</div>' +
+          '<div style="font-size:2.6rem;font-weight:800;color:var(--navy);line-height:1;margin-bottom:4px">₹1,499<span style="font-size:1rem;font-weight:600;color:var(--s600)">/month</span></div>' +
+          '<div style="font-size:.98rem;color:var(--blue);font-weight:800;margin-bottom:6px">₹1.16 per message*</div>' +
+          '<div style="font-size:.84rem;color:var(--s600);line-height:1.6;margin-bottom:22px">(₹0.86 Meta charges + ₹0.30 GoPilots platform fee)</div>' +
+          '<a href="https://wa.me/917503834000?text=I+want+to+start+WhatsApp+Marketing+on+the+1499+plan" target="_blank" style="display:block;text-align:center;background:linear-gradient(135deg,var(--blue),#1245C8);color:#fff;text-decoration:none;padding:11px 20px;border-radius:50px;font-size:.875rem;font-weight:700;margin-bottom:24px">Get Started</a>' +
+          '<p style="font-size:.82rem;font-weight:700;color:var(--s700);margin-bottom:10px">Includes:</p>' +
+          '<ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:8px;font-size:.84rem;color:var(--s600);flex:1">' +
+          '<li>✓ Campaign scheduling</li>' +
+          '<li>✓ Audience segmentation</li>' +
+          '<li>✓ Better unit economics</li>' +
+          '</ul>' +
+          '</div>' +
+          '<div style="background:#fff;border:1.5px solid var(--s200);border-radius:var(--rl);padding:36px 28px;position:relative;transition:all .3s;display:flex;flex-direction:column">' +
+          '<div style="font-size:.72rem;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px">Scale volume</div>' +
+          '<div style="font-size:2.6rem;font-weight:800;color:var(--navy);line-height:1;margin-bottom:4px">₹4,999<span style="font-size:1rem;font-weight:600;color:var(--s600)">/month</span></div>' +
+          '<div style="font-size:.98rem;color:var(--blue);font-weight:800;margin-bottom:6px">₹1.16 per message*</div>' +
+          '<div style="font-size:.84rem;color:var(--s600);line-height:1.6;margin-bottom:22px">(₹0.86 Meta charges + ₹0.30 GoPilots platform fee)</div>' +
+          '<a href="https://wa.me/917503834000?text=I+want+to+start+WhatsApp+Marketing+on+the+4999+plan" target="_blank" style="display:block;text-align:center;background:var(--navy);color:#fff;text-decoration:none;padding:11px 20px;border-radius:50px;font-size:.875rem;font-weight:700;margin-bottom:24px">Get Started</a>' +
+          '<p style="font-size:.82rem;font-weight:700;color:var(--s700);margin-bottom:10px">Includes:</p>' +
+          '<ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:8px;font-size:.84rem;color:var(--s600);flex:1">' +
+          '<li>✓ Priority campaign support</li>' +
+          '<li>✓ Delivery tracking insights</li>' +
+          '<li>✓ High-volume sending readiness</li>' +
+          '</ul>' +
+          '</div>' +
+          '</div>' +
+          '<p style="text-align:center;color:var(--s400);font-size:.8rem;line-height:1.7;margin-top:8px">No contract. No hidden fees. Cancel anytime. +18% GST applies.</p>' +
+          '</div>' +
+          '</section>' +
+          '</div>' +
+          '</div>' +
+          '</section>' +
+          '<section style="padding:80px 5vw;text-align:center;background:linear-gradient(135deg, var(--b50) 0%, rgba(34,197,94,.05) 100%)">' +
+          '<h2 style="font-weight:800;font-size:2rem;color:var(--navy);margin-bottom:12px">Pick your plan. Launch in 24 hours.</h2>' +
+          '<p style="font-size:1.05rem;color:var(--s600);margin-bottom:8px">50+ businesses already own their customers with GoPilots.</p>' +
+          '<p style="font-size:.95rem;color:var(--s500);margin-bottom:32px">No setup fees. No credit card. Cancel anytime.</p>' +
+          '</section>'
+        );
+      }
+
+      var POLS = {
+        privacy: {
+          title: 'Privacy Policy',
+          date: 'Last updated February 15, 2025',
+          sections: [
+            ['Overview', 'This Privacy Policy describes how GoPilots ("we", "us", "our") collects, uses, and shares information when you use our WhatsApp Commerce Platform and services. We are committed to protecting your privacy and ensuring you have a positive experience.'],
+            ['What Information Do We Collect?', 'We collect personal information you provide directly when you register, place orders, or contact us, including: names, phone numbers, email addresses, WhatsApp business details, delivery/business addresses, payment information, and ordering preferences. We do not process sensitive information. All payment data is processed securely and subject to our payment processor\'s privacy policy.'],
+            ['How Do We Use Your Information?', 'We use your information to: facilitate account creation and order management, deliver services and order fulfillment, send WhatsApp order confirmations and updates, respond to your inquiries, conduct marketing and promotional communications, evaluate and improve our services, identify usage trends, and comply with legal obligations. We only process information when we have a valid legal reason to do so.'],
+            ['WhatsApp Business API & Data', 'GoPilots operates through the WhatsApp Business API. Messages and data exchanged are subject to WhatsApp\'s privacy policy in addition to ours. We store order-related messages and communications to improve service quality, resolve disputes, and maintain business records. All WhatsApp communications are encrypted in transit.'],
+            ['How Do We Keep Your Information Safe?', 'We implement industry-standard security measures including encryption of data in transit and at rest, restricted access to customer data by authorized personnel only, regular security assessments, and secure payment processing. However, no electronic transmission is 100% secure. We cannot guarantee absolute protection against unauthorized access.'],
+            ['Who Do We Share Your Information With?', 'We do not sell your personal data to third parties. We may share information with: business partners necessary to fulfill your orders, payment processors to handle transactions, and service providers who assist with operations. We may share information in case of business transfers, mergers, or acquisitions of our business.'],
+            ['How Long Do We Keep Your Information?', 'We retain personal information as long as necessary to provide services, fulfill transactions, and comply with legal obligations. Order-related data is typically retained for accounting and dispute resolution purposes. You can request deletion of your data subject to legal requirements.'],
+            ['Your Privacy Rights', 'Depending on your location, you may have rights to: access your personal information, request correction of inaccurate data, request deletion of your data, opt-out of marketing communications, and data portability. To exercise these rights, contact us at contact@gopilots.in or call 7503834000.'],
+            ['Marketing Communications', 'We may send you WhatsApp messages about new features, promotions, and service updates. You can opt-out of marketing messages at any time by notifying us through WhatsApp or email.'],
+            ['Do We Collect Information From Minors?', 'Our services are not intended for individuals under 18 years of age. We do not knowingly collect information from minors. If we discover we have collected data from a minor, we will delete it promptly.'],
+            ['Updates to This Notice', 'We may update this Privacy Policy periodically to reflect changes in our practices or applicable laws. Continued use of our services following updates constitutes your acceptance of the revised policy.'],
+            ['Contact Us', 'For privacy questions, concerns, or to exercise your privacy rights, please contact us at: Email: contact@gopilots.in | Phone: +91-637-6090-954 | We will respond to all requests within 30 days.']
+          ]
+        },
+        refund: {
+          title: 'Refund & Cancellation Policy',
+          date: 'Last updated April 1, 2024',
+          sections: [
+            ['Cancellation Policy', 'GoPilots has a liberal cancellation policy. Cancellations are only considered if the request is made immediately after placing the order. Requests may not be entertained once the vendor has initiated fulfillment.'],
+            ['Perishable Items', 'We do not accept cancellation requests for perishable items like eatables. However, a refund or replacement may be issued if the quality of the delivered product is not acceptable.'],
+            ['Damaged or Defective Items', 'In case of damaged or defective items, please report to our Customer Service team within the same day of receipt. The request will be reviewed once the merchant confirms the issue.'],
+            ['Wrong Product', 'If the product received does not match what was ordered, please notify our customer service team within the same day of delivery.'],
+            ['Refund Processing', 'Approved refunds will be processed within 16-30 days to the original payment method.']
+          ]
+        },
+        terms: {
+          title: 'Terms & Conditions',
+          date: 'Last updated April 1, 2024',
+          sections: [
+            ['Binding Agreement', 'These Terms constitute a binding agreement between GoPilots and you. By using our services, you confirm you have read and accepted these Terms including the Privacy Policy.'],
+            ['Account & Registration', 'You agree to provide true, accurate, and complete information during registration. You are responsible for all activity conducted through your registered account.'],
+            ['No Warranty', 'We do not warrant the accuracy, timeliness, or suitability of information on this website. Your use of our services is entirely at your own risk.'],
+            ['Intellectual Property', 'All content on this website is proprietary to us. You have no right to claim intellectual property rights over any content. Unauthorised use may result in legal action.'],
+            ['Prohibited Use', 'You agree not to use our website or services for any unlawful purpose or any purpose forbidden by these Terms or applicable Indian law.'],
+            ['Governing Law', 'These Terms are governed by the laws of India. All disputes are subject to the exclusive jurisdiction of the courts in Karnataka.']
+          ]
+        }
+      };
+
+      function buildPolicies() {
+        var pol = POLS[state.pol] || POLS.privacy;
+        var tabDefs = [['privacy', 'Privacy'], ['refund', 'Refund & Cancellation'], ['terms', 'Terms']];
+        var tabsHTML = '';
+        for (var t = 0; t < tabDefs.length; t++) {
+          var active = state.pol === tabDefs[t][0] ? ' on' : '';
+          tabsHTML += '<button class="pt' + active + '" data-pol="' + tabDefs[t][0] + '">' + tabDefs[t][1] + '</button>';
+        }
+        var checkIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="#1551E8" stroke-width="1.9" stroke-linecap="round"/><polyline points="22 4 12 14.01 9 11.01" stroke="#1551E8" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        var secsHTML = '';
+        for (var s = 0; s < pol.sections.length; s++) {
+          secsHTML += '<div class="pol-sec"><h2>' + checkIcon + pol.sections[s][0] + '</h2><p>' + pol.sections[s][1] + '</p></div>';
+        }
+        return (
+          '<div class="pol-pg">' +
+          '<div style="text-align:center;margin-bottom:40px"><h1 style="font-size:2.2rem">Sell. Automate. Grow on ' + waIcon(50, '#25D366') + ' WhatsApp</h1></div>' +
+          '<h2 style="font-size:1.6rem;margin-bottom:8px">' + pol.title + '</h2>' +
+          '<p class="pol-date">' + pol.date + '</p>' +
+          '<div class="pol-tabs" id="pol-tabs">' + tabsHTML + '</div>' +
+          secsHTML +
+          '</div>'
+        );
+      }
+
+      // --- Event listeners (NO inline onclick anywhere) ---
+
+      document.addEventListener('click', function (e) {
+        var t = e.target.closest('[data-go]');
+        if (t) {
+          var route = t.getAttribute('data-go');
+          var pol = t.getAttribute('data-pol') || null;
+          navigate(route, pol);
+          return;
+        }
+
+        // FAQ toggle
+        var faqQ = e.target.closest('.faq-q');
+        if (faqQ) {
+          faqQ.closest('.faq-item').classList.toggle('open');
+          var toggle = faqQ.querySelector('.faq-toggle');
+          if (toggle) toggle.classList.toggle('open');
+          return;
+        }
+
+        // Policy tab buttons
+        var ptBtn = e.target.closest('.pt');
+        if (ptBtn && ptBtn.getAttribute('data-pol')) {
+          var polValue = ptBtn.getAttribute('data-pol');
+          navigate('policies', polValue);
+          return;
+        }
+
+        // How it works button (rendered dynamically)
+        if (e.target.closest('#how-btn')) {
+          if (state.route !== 'home') {
+            navigate('home');
+            setTimeout(function () {
+              var homeHow = document.getElementById('how');
+              if (homeHow) homeHow.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 80);
+          } else {
+            var howSection = document.getElementById('how');
+            if (howSection) howSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+          return;
+        }
+
+        // Dropdown toggle
+        if (e.target.closest('#dd-btn')) {
+          var ddMenu = document.getElementById('dd-menu');
+          var chev = document.getElementById('chev');
+          var isOpen = ddMenu.style.display === 'block';
+          ddMenu.style.display = isOpen ? 'none' : 'block';
+          if (chev) chev.classList.toggle('open', !isOpen);
+          return;
+        }
+
+        // Close dropdown if clicking outside
+        var ddWrap = document.getElementById('dd-wrap');
+        if (ddWrap && !ddWrap.contains(e.target)) {
+          var ddMenu2 = document.getElementById('dd-menu');
+          if (ddMenu2) ddMenu2.style.display = 'none';
+          var chev2 = document.getElementById('chev');
+          if (chev2) chev2.classList.remove('open');
+        }
+
+        // Mobile toggle
+        if (e.target.closest('#mob-btn')) {
+          var mobNav = document.getElementById('mob-nav');
+          if (mobNav) mobNav.classList.toggle('open');
+          return;
+        }
+
+        // GST asterisk scroll to notice
+        var gstLink = e.target.closest('.gst-link');
+        if (gstLink) {
+          var gstNotice = document.querySelector('.gst-notice');
+          if (gstNotice) {
+            gstNotice.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+          return;
+        }
+
+        // Comparison table toggle
+        var compToggle = e.target.closest('#comp-toggle');
+        if (compToggle) {
+          var compWrapper = document.getElementById('comp-wrapper');
+          if (compWrapper) {
+            compWrapper.classList.toggle('open');
+            compToggle.classList.toggle('open');
+          }
+          return;
+        }
+      });
+
+      // Plan type toggle: Ordering vs Campaign Messaging
+      window.setPlanType = function (type) {
+        var oBtn = document.getElementById('plan-type-ordering');
+        var cBtn = document.getElementById('plan-type-campaign');
+        if (oBtn) oBtn.classList.toggle('active', type === 'ordering');
+        if (cBtn) cBtn.classList.toggle('active', type === 'campaign');
+
+        var pricingStack = document.getElementById('pricing-stack');
+        var orderingStack = document.getElementById('ordering-stack');
+        var campaignStack = document.getElementById('campaign-stack');
+        var pricingDivider = document.getElementById('pricing-divider');
+        var orderingControls = document.getElementById('ordering-hero-controls');
+
+        if (pricingStack && orderingStack && campaignStack && pricingDivider) {
+          if (type === 'campaign') {
+            pricingStack.insertBefore(campaignStack, orderingStack);
+            pricingStack.insertBefore(pricingDivider, orderingStack);
+          } else {
+            pricingStack.insertBefore(orderingStack, campaignStack);
+            pricingStack.insertBefore(pricingDivider, campaignStack);
+          }
+        }
+
+        if (orderingControls) {
+          orderingControls.hidden = type === 'campaign';
+        }
+      };
+
+      // Billing toggle for pricing page
+      window.setBilling = function (type) {
+        var mBtn = document.getElementById('opt-monthly');
+        var yBtn = document.getElementById('opt-yearly');
+        if (mBtn) mBtn.classList.toggle('active', type === 'monthly');
+        if (yBtn) yBtn.classList.toggle('active', type === 'yearly');
+        document.querySelectorAll('.plan-price-amount[data-yearly]').forEach(function (el) {
+          el.textContent = type === 'yearly' ? el.dataset.yearly : el.dataset.monthly;
+        });
+        document.querySelectorAll('.billed-note').forEach(function (el) {
+          el.textContent = type === 'yearly' ? 'Billed annually' : 'Billed monthly';
+        });
+        var badge = document.getElementById('billing-save-badge');
+        if (badge) badge.style.opacity = type === 'yearly' ? '1' : '0.4';
+      };
+
+      // Handle browser back/forward buttons
+      window.addEventListener('popstate', function (e) {
+        parseUrlAndNavigate();
+      });
+
+      // Initial render - check URL and navigate accordingly
+      parseUrlAndNavigate();
+
+    })();
+  </script>
+</body>
+
+</html>
