@@ -4001,7 +4001,7 @@
         document.getElementById('ngrok-send-btn').setAttribute('data-token', token);
       }
 
-      function sendToNgrok() {
+      window.sendToNgrok = function sendToNgrok() {
         var btn = document.getElementById('ngrok-send-btn');
         var urlEl = document.getElementById('ngrok-url');
         var toEl = document.getElementById('ngrok-to');
@@ -4079,7 +4079,7 @@
         section.style.display = 'block';
       }
 
-      function selectPhoneForSend(phoneNumberId, phoneDisplay, encodedToken) {
+      window.selectPhoneForSend = function selectPhoneForSend(phoneNumberId, phoneDisplay, encodedToken) {
         var accessToken = decodeURIComponent(encodedToken);
         var sendSection = document.getElementById('fb-send-section');
         if (!sendSection) return;
@@ -4099,7 +4099,7 @@
         sendSection.scrollIntoView({ behavior: 'smooth' });
       }
 
-      function sendWaMessage(phoneNumberId, encodedToken) {
+      window.sendWaMessage = function sendWaMessage(phoneNumberId, encodedToken) {
         var accessToken = decodeURIComponent(encodedToken);
         var toEl = document.getElementById('fb-to-number');
         var bodyEl = document.getElementById('fb-msg-body');
