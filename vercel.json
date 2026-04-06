@@ -78,6 +78,10 @@
     {
       "source": "/terms-conditions",
       "destination": "/index.html"
+    },
+    {
+      "source": "/fb_login_access",
+      "destination": "/index.html"
     }
   ]
 }
